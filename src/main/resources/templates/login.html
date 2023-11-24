@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h1> Sign In Page</h1>
+
+<main>
+    <form  th:object="${formData}"
+           th:action="@{/w/login}"
+           method="post">
+        <div>
+            <input type="text"  placeholder="Your login ..."  th:field = "*{username}" required >
+            <ul class="text-danger" th:each="error: ${#fields.errors('username')}">
+                <li th:each="message : ${error.split(',')}">
+                    <p style="color: red" class="error-message" th:text="${message}"></p>
+                </li>
+            </ul>
+            <input type="password"  placeholder="Your password ..." required th:field = "*{password}">
+            <ul class="text-danger" th:each="error: ${#fields.errors('password')}">
+                <li th:each="message : ${error.split(',')}">
+                    <p style="color: red" class="error-message" th:text="${message}"></p>
+                </li>
+            </ul>
+            <button th:class="button" type="submit" >Login</button>
+        </div>
+        <div th:if="${param.error}">
+            Invalid login and password
+        </div>
+    </form>
+
+</main>
+</body>
+</html>
