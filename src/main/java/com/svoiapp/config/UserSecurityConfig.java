@@ -48,7 +48,7 @@ public class UserSecurityConfig {
                         .loginPage("/login.html").
                         permitAll())
                 .logout((logout) -> logout.permitAll());
-
+        System.out.println("check");
         return http.build();
     }
 }
