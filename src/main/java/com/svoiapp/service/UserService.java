@@ -2,20 +2,23 @@ package com.svoiapp.service;
 
 import com.svoiapp.entity.DataEntity;
 import com.svoiapp.formdata.CreateLoginFromData;
-import com.svoiapp.formdata.form.LoginForm;
 import com.svoiapp.repo.DataRepo;
+import org.boon.primitive.Int;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Logger;
 
 @Service
 public class UserService {
     private static final Logger logger = Logger.getLogger(UserService.class.getName());
     private final DataRepo repo;
+
 
     public UserService(DataRepo repo) {
         this.repo = repo;
@@ -47,5 +50,20 @@ public class UserService {
         logger.info(String.format("Is email %s avaliable : %s", email, !loginEmail));
         resultList.add(loginEmail);
         return resultList;
+    }
+
+    public Boolean isEmailAuthorised (String login, String email){
+        DataEntity data = repo.findDataEntityByLoginAndEmail(login, email);
+        return data.getConfirmed();
+    }
+
+    public String authoriseEmail (Integer pin, String login, String email){
+        DataEntity data = repo.findDataEntityByLoginAndEmail(login, email);
+        try{
+            data.setPin(pin);
+            repo.save(data);
+            return "updated";
+        }catch (Exception e){
+            return e.getMessage();  }
     }
 }

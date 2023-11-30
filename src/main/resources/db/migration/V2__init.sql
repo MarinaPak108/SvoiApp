@@ -1,0 +1,1 @@
+Alter table data add column confirmed boolean default false;

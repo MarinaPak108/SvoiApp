@@ -14,11 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.WebUtils;
 
 import java.util.List;
 
@@ -31,7 +29,7 @@ public class UserWebController {
         this.service = service;
     }
 
-    @GetMapping("/home")
+    @RequestMapping("/home")
     public String home (){
         System.out.println("here");
         return "home";
@@ -58,8 +56,15 @@ public class UserWebController {
     }
 
     @GetMapping("/login")
-    public String showLogin(Model model) {
+    public String showLogin(@RequestParam(name = "loginRequired", required = false) final Boolean loginRequired,
+                            @RequestParam(name = "loginError", required = false) final Boolean loginError,
+                            @RequestParam(name = "logoutSuccess", required = false) final Boolean logoutSuccess,
+                            final Model model) {
         model.addAttribute("formData", new CreateLoginFromData());
+        if (loginError == Boolean.TRUE) {
+            model.addAttribute("error", "login error");
+            System.out.println("here");
+        }
         return "login";}
 
 }

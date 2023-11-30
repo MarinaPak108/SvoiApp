@@ -3,6 +3,11 @@ body{
     place-content: center;
 }
 
+p.error {
+    font-weight: bold;
+    color: red;
+}
+
 h1 {
     color: #34568b;
 }

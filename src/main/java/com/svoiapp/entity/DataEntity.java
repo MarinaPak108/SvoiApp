@@ -37,13 +37,11 @@ public class DataEntity {
     @Column(name = "pin")
     private Integer pin;
 
-    public DataEntity(Long dataId,
-                      Date registered,
-                      AuthEntity auth,
-                      String login,
-                      String pwd,
-                      String email,
-                      Integer pin) {
+    @Basic
+    @Column(name = "confirmed")
+    private Boolean confirmed;
+
+    public DataEntity(Long dataId, Date registered, AuthEntity auth, String login, String pwd, String email, Integer pin, Boolean confirmed) {
         this.dataId = dataId;
         this.registered = registered;
         this.auth = auth;
@@ -51,7 +49,9 @@ public class DataEntity {
         this.pwd = pwd;
         this.email = email;
         this.pin = pin;
+        this.confirmed = confirmed;
     }
+
 
     public DataEntity() {
 
@@ -113,6 +113,14 @@ public class DataEntity {
         this.pin = pin;
     }
 
+    public Boolean getConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(Boolean confirmed) {
+        this.confirmed = confirmed;
+    }
+
     @Override
     public String toString() {
         return "DataEntity{" +
@@ -123,6 +131,7 @@ public class DataEntity {
                 ", pwd='" + pwd + '\'' +
                 ", email='" + email + '\'' +
                 ", pin=" + pin +
+                ", confirmed=" + confirmed +
                 '}';
     }
 }

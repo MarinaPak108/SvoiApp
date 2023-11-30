@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
             Set<GrantedAuthority> ga = new HashSet<>();
             ga.add(new SimpleGrantedAuthority(role));
 
-            springUser = new org.springframework.security.core.userdetails.User(login, data.getPwd(), ga);
+            springUser = new org.springframework.security.core.userdetails.User(login+"/__/"+data.getEmail(), data.getPwd(), ga);
             SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(new UsernamePasswordAuthenticationToken(springUser, null), ga));
 
         }

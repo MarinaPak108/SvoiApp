@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -40,13 +41,14 @@ public class UserSecurityConfig {
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/resources/",   "/login.html",
                                 "/static/", "/js/", "/css/", "/img/", "/json/").permitAll()
+                        .requestMatchers(new AntPathRequestMatcher(("/w/home"))).hasAnyRole("USER", "MEMBER")
                         .anyRequest().permitAll()
                 )
                 .formLogin((form)->form
                         .loginProcessingUrl("/w/login")
                         .defaultSuccessUrl("/w_main/service")
-                        .loginPage("/login.html").
-                        permitAll())
+                        .failureUrl("/w/login?loginError=true")
+                        .permitAll())
                 .logout((logout) -> logout.permitAll());
         return http.build();
     }

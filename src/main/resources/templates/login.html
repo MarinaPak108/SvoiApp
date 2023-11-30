@@ -15,22 +15,10 @@
            method="post">
         <div>
             <input type="text"  placeholder="Your login ..."  th:field = "*{username}" required >
-            <ul class="text-danger" th:each="error: ${#fields.errors('username')}">
-                <li th:each="message : ${error.split(',')}">
-                    <p style="color: red" class="error-message" th:text="${message}"></p>
-                </li>
-            </ul>
             <input type="password"  placeholder="Your password ..." required th:field = "*{password}">
-            <ul class="text-danger" th:each="error: ${#fields.errors('password')}">
-                <li th:each="message : ${error.split(',')}">
-                    <p style="color: red" class="error-message" th:text="${message}"></p>
-                </li>
-            </ul>
             <button th:class="button" type="submit" >Login</button>
         </div>
-        <div th:if="${param.error}">
-            Invalid login and password
-        </div>
+        <div th:if="${error} != null" th:text="@{error}"></div>
     </form>
 
 </main>
