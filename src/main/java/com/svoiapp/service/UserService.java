@@ -3,23 +3,12 @@ package com.svoiapp.service;
 import com.svoiapp.entity.DataEntity;
 import com.svoiapp.formdata.CreateLoginFromData;
 import com.svoiapp.repo.DataRepo;
-import jakarta.mail.Message;
-import jakarta.mail.MessagingException;
-import jakarta.mail.Session;
-import jakarta.mail.Transport;
-import jakarta.mail.internet.AddressException;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
-import org.boon.primitive.Int;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Logger;
 
 @Service

@@ -66,7 +66,9 @@ public class UserSecurityConfig {
                         //.failureUrl("/w/login?loginError=true")
                         .failureHandler(authenticationFailureHandler())
                         .permitAll())
-                .logout((logout) -> logout.permitAll())
+                .logout((logout) -> logout
+                        .logoutSuccessUrl("/w/logout")
+                        .permitAll())
                 .exceptionHandling()
                 .accessDeniedHandler(accessDeniedHandler());
         return http.build();

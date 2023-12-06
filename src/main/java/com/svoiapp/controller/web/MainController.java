@@ -1,5 +1,6 @@
 package com.svoiapp.controller.web;
 
+import com.svoiapp.exception.CustomAuthHanlder;
 import com.svoiapp.service.EmailService;
 import com.svoiapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,7 @@ public class MainController {
 
     @RequestMapping("/service")
     public String service(Model model){
-        Authentication authentication =
-                SecurityContextHolder.getContext().getAuthentication();
-        String[] loginEmail = authentication.getName().split("/__/");
+        String[] loginEmail = CustomAuthHanlder.getLogin();
         String login = loginEmail[0];
         String email = loginEmail[1];
         boolean isEmailConfirmed = service.isEmailAuthorised(login, email);

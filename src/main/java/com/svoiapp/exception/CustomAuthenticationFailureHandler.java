@@ -7,7 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import java.io.IOException;
@@ -30,7 +32,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
                 "timestamp", Calendar.getInstance().getTime());
         data.put(
                 "exception", exception.getMessage());
-        logger.info("login failed. details: "+ data);
+        logger.info("login for failed. details: "+ data);
         response.sendRedirect("/w/login?loginError=true");
     }
 }

@@ -2,32 +2,37 @@ package com.svoiapp.controller.web;
 
 import com.svoiapp.formdata.CreateLoginFromData;
 import com.svoiapp.formdata.CreateUserFormData;
-import com.svoiapp.formdata.form.LoginForm;
 import com.svoiapp.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.WebUtils;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/w")
-public class UserWebController {
+public class AuthWebController {
     private final UserService service;
 
-    public UserWebController(UserService service) {
+    public AuthWebController(UserService service) {
         this.service = service;
+    }
+
+    SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+
+    @RequestMapping("/logout")
+    public String performLogout(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
+        // .. perform logout
+        this.logoutHandler.logout(request, response, authentication);
+        return "redirect:/m/home";
     }
 
     @GetMapping("/signin")
