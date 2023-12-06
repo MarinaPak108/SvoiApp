@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class UserServiceImpl implements UserDetailsService, IUserService {
+public class UserServiceImpl implements UserDetailsService {
 
     private final DataRepo repo;
 

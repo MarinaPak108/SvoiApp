@@ -7,14 +7,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Controller
-@RequestMapping("/w_main")
+@RequestMapping("/m")
 public class MainController {
     private final UserService service;
 
@@ -23,6 +20,21 @@ public class MainController {
 
     public MainController(UserService service) {
         this.service = service;
+    }
+
+    @RequestMapping("/home")
+    public String home (Model model){
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+        String[] loginEmail = authentication.getName().split("/__/");
+        String login = loginEmail[0];
+        if(login.equals("anonymousUser")){
+            model.addAttribute("user", "Welcome to SVOI app");
+        }
+        else {
+            model.addAttribute("user", "Hi "+ login + ", welcome to SVOI app");
+        }
+        return "home";
     }
 
     @RequestMapping("/service")

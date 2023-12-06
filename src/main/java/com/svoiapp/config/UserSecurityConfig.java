@@ -1,6 +1,7 @@
 package com.svoiapp.config;
 
 import com.svoiapp.exception.CustomAccessDeniedHandler;
+import com.svoiapp.exception.CustomAuthenticationFailureHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -32,13 +34,18 @@ public class UserSecurityConfig {
         return new CustomAccessDeniedHandler();
     }
 
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler(){
+        return new CustomAuthenticationFailureHandler();
+    }
+
 
     @Bean
     public AuthenticationProvider authenticationProvider (){
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(uds);
         authenticationProvider.setPasswordEncoder(encoder);
-        authenticationProvider.setHideUserNotFoundExceptions(false);
+        //authenticationProvider.setHideUserNotFoundExceptions(false);
         return authenticationProvider;
     }
 
@@ -46,15 +53,18 @@ public class UserSecurityConfig {
     SecurityFilterChain appEndpoints(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/resources/",   "/login.html",
-                                "/static/", "/js/", "/css/", "/img/", "/json/").permitAll()
-                        .requestMatchers(new AntPathRequestMatcher(("/w/home"))).hasAnyRole("USER", "MEMBER")
-                        .anyRequest().permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/m/service")).hasAnyRole("MEMBER")
+                        .requestMatchers(new AntPathRequestMatcher("/m/home")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/w/access-failed")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/w/login?loginError=true")).permitAll()
+                        .anyRequest().authenticated()
                 )
                 .formLogin((form)->form
                         .loginProcessingUrl("/w/login")
-                        .defaultSuccessUrl("/w_main/service")
-                        .failureUrl("/w/login?loginError=true")
+                        .defaultSuccessUrl("/m/home")
+                        //.failureUrl("/w/login?loginError=true")
+                        .failureHandler(authenticationFailureHandler())
                         .permitAll())
                 .logout((logout) -> logout.permitAll())
                 .exceptionHandling()

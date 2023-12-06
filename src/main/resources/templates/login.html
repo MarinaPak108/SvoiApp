@@ -7,9 +7,16 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
-<h1> Sign In Page</h1>
+<div class="topnav">
+    <a href="/m/home">Home</a>
+    <a  href="/m/service">Service</a>
+    <a href="#about">About</a>
+    <a class="login-active" href="/w/login">Login/Signin</a>
+    <a class="login-container" href="/w/signin">Signin</a>
+</div>
 
 <main>
+    <div class = "center" style="color: red; font-size: 18px" th:if="${error != null}" th:text = "${error}"></div>
     <form  th:object="${formData}"
            th:action="@{/w/login}"
            method="post">
@@ -18,9 +25,7 @@
             <input type="password"  placeholder="Your password ..." required th:field = "*{password}">
             <button th:class="button" type="submit" >Login</button>
         </div>
-        <div th:if="${error} != null" th:text="@{error}"></div>
     </form>
-
 </main>
 </body>
 </html>

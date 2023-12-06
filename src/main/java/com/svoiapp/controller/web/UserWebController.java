@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,12 +28,6 @@ public class UserWebController {
 
     public UserWebController(UserService service) {
         this.service = service;
-    }
-
-    @RequestMapping("/home")
-    public String home (){
-        System.out.println("here");
-        return "home";
     }
 
     @GetMapping("/signin")
@@ -55,16 +50,35 @@ public class UserWebController {
             return "mypage";
     }
 
+    @GetMapping("/access-denied")
+    public String accessDenied (Model model){
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+        String[] loginEmail = authentication.getName().split("/__/");
+        String login = loginEmail[0];
+        String email = loginEmail[1];
+        boolean isEmailConfirmed = service.isEmailAuthorised(login, email);
+        String role = authentication.getAuthorities().iterator().next().getAuthority();
+        if(!isEmailConfirmed && role.equals("ROLE_USER")){
+            model.addAttribute("msg", "please confirm your email");
+
+        }
+        else if (role.equals("ROLE_GUEST")){
+            model.addAttribute("msg", "please sign in and confirm email to use our services");
+        }
+        return "home";
+    }
+
     @GetMapping("/login")
-    public String showLogin(@RequestParam(name = "loginRequired", required = false) final Boolean loginRequired,
-                            @RequestParam(name = "loginError", required = false) final Boolean loginError,
-                            @RequestParam(name = "logoutSuccess", required = false) final Boolean logoutSuccess,
+    public String showLogin(@RequestParam(name = "loginError", required = false) final Boolean loginError,
+                            @RequestParam(name = "loginDetails", required = false) final Boolean loginDetails,
                             final Model model) {
         model.addAttribute("formData", new CreateLoginFromData());
         if (loginError == Boolean.TRUE) {
-            model.addAttribute("error", "login error");
-            System.out.println("here");
+            model.addAttribute("error", "worng login or password");
         }
         return "login";}
+
+
 
 }

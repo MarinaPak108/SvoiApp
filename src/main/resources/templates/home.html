@@ -6,7 +6,20 @@
     <title>HOME</title>
 </head>
 <body>
-<h1> HOME Page</h1>
+<div class="topnav">
+    <a class="active" href="/m/home">Home</a>
+    <a href="/m/service">Service</a>
+    <a href="#about">About</a>
+    <a class="login-container" href="/w/login">Login</a>
+    <a class="login-container" href="/w/signin">Signin</a>
+</div>
+<main>
+    <h1> HOME Page</h1>
+    <div class = "center" style="color: darkblue; font-size: 18px" th:if="${user != null}" th:text = "${user}"></div>
+    <div style="color: darkblue; font-size: 18px" th:if="${msg != null}" th:text = "${msg}"></div>
+    <h2> Help to extend visa </h2>
 
+
+</main>
 </body>
 </html>

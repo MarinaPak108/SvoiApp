@@ -10,4 +10,6 @@ public interface EmailService {
                                    String text,
                                    String pathToAttachment);
     Object sendConfirmationEmail (String login, String email);
+
+    Object sendEmail (String login, String email);
 }

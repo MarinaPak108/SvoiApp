@@ -5,13 +5,21 @@
     <title>SERVICE</title>
     <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
-<h1>SERVICE MENU</h1>
-<main>
-    <button type="button" class="bigbutton" style="' background-image: url('+{/icons/visaapproved.jpg} + '); background-size: cover;'" value="F4 visa"></button>
-</main>
 <body>
 
-<p> Service page</p>
+<div class="topnav">
+    <a href="/m/home">Home</a>
+    <a class="active" href="/m/service">Service</a>
+    <a href="#about">About</a>
+    <a class="login-container" href="/w/login">Login</a>
+    <a class="login-container" href="/w/signin">Logout</a>
+</div>
+
+<main>
+    <h1>SERVICE MENU</h1>
+    <p> Service page</p>
+    <button type="button" class="bigbutton" style="' background-image: url('+{/icons/visaapproved.jpg} + '); background-size: cover;'" value="F4 visa"></button>
+</main>
 
 </body>
 </html>
