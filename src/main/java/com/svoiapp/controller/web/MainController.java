@@ -1,7 +1,6 @@
 package com.svoiapp.controller.web;
 
 import com.svoiapp.exception.CustomAuthHanlder;
-import com.svoiapp.service.EmailService;
 import com.svoiapp.service.MailService;
 import com.svoiapp.service.UserService;
 import jakarta.mail.MessagingException;
@@ -17,9 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/m")
 public class MainController {
     private final UserService service;
-
-    @Autowired
-    public EmailService emailService;
 
     @Autowired
     public MailService mailService;
