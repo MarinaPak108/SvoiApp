@@ -27,7 +27,7 @@ public class SvoiConfig {
     @Value("${spring.mail.properties.mail.smtp.auth}")
     private String mailServerAuth;
 
-    @Value("${spring.mail.properties.mail.smtp.starttls.enable}")
+    @Value("${spring.mail.properties.mail.smtp.ssl.enable}")
     private String mailServerStartTls;
     @Bean
     public BCryptPasswordEncoder encoder() {
