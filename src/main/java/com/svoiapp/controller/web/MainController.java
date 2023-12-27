@@ -1,6 +1,8 @@
 package com.svoiapp.controller.web;
 
 import com.svoiapp.exception.CustomAuthHanlder;
+import com.svoiapp.formdata.CreateVisaExtendFormData;
+import com.svoiapp.service.DocService;
 import com.svoiapp.service.MailService;
 import com.svoiapp.service.UserService;
 import jakarta.mail.MessagingException;
@@ -9,19 +11,26 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.io.IOException;
 
 
 @Controller
 @RequestMapping("/m")
 public class MainController {
     private final UserService service;
+    private final DocService dService;
 
     @Autowired
     public MailService mailService;
 
-    public MainController(UserService service) {
+    public MainController(UserService service, DocService dService) {
         this.service = service;
+        this.dService = dService;
     }
 
     @RequestMapping("/home")
@@ -48,12 +57,23 @@ public class MainController {
         if(isEmailConfirmed){
             model.addAttribute("isChecked", true);
         }
-        else {
-            mailService.sendHtmlEmail();
-        }
+        //else {
+            //mailService.sendHtmlEmail();
+        //}
 
         model.addAttribute("userName", login);
         return"service";
+    }
+
+    @GetMapping("/visaExt")
+    public String visaExtend (Model model){
+        model.addAttribute("formData", new CreateVisaExtendFormData());
+        return "visa";
+    }
+    @PostMapping("/visaExt")
+    public String processVisa (@ModelAttribute("formData") CreateVisaExtendFormData formData) throws IOException {
+        dService.replaceText(formData.getName()+formData.getVisatype());
+        return "service";
     }
 
 }

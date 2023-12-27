@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SERVICE</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+<div class="topnav">
+    <a href="/m/home">Home</a>
+    <a class="active" href="/m/service">Service</a>
+    <a href="#about">About</a>
+    <a class="login-container" href="/w/login">Login</a>
+    <a class="login-container" href="/w/signin">Logout</a>
+    <a class="login-container" href="/w/logout">Logout</a>
+</div>
+
+<main>
+    <h1>SERVICE MENU</h1>
+    <p> Service page</p>
+    <h2> Operation complete</h2>
+
+    <form th:object="${formData}"
+          th:action="@{/m/visaExt}"
+          method="post">
+        <div>
+            <input type="text"placeholder="Your name ..."  th:field = "*{name}" required >
+            <input type="text"placeholder="Your name ..."  th:field = "*{surname}" required >
+            <input type="text"placeholder="Your address ..."  th:field = "*{address}" required >
+            <input type="hidden" list="visa" />
+            <select id="visa" name="visas" th:field = "*{visatype}">
+                <option value = "0"> Select Visa Type </option>
+                <option value = "f4"> F4 </option>
+                <option value = "h2"> H2 </option>
+            </select>
+
+            <div>
+                <button th:class="button" type="submit" >Sign In</button>
+            </div>
+        </div>
+
+    </form>
+</main>
+
+</body>
+</html>

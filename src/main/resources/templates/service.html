@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>SERVICE</title>
     <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
@@ -19,7 +21,8 @@
 <main>
     <h1>SERVICE MENU</h1>
     <p> Service page</p>
-    <button type="button" class="bigbutton" style="' background-image: url('+{/icons/visaapproved.jpg} + '); background-size: cover;'" value="F4 visa"></button>
+
+    <button onclick="location.href='http://localhost:8080/m/visaExt'" type="button" class="bigbutton" >Visa Extension</button>
 </main>
 
 </body>
