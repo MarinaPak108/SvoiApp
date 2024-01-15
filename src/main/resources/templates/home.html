@@ -18,10 +18,19 @@
 <main>
     <h1> HOME Page</h1>
     <div class = "center" style="color: darkblue; font-size: 18px" th:if="${user != null}" th:text = "${user}"></div>
-    <div style="color: darkblue; font-size: 18px" th:if="${msg != null}" th:text = "${msg}"></div>
-    <h2> Help to extend visa </h2>
 
-
+    <h2 th:if="${msg != null}" th:text = "${msg}"></h2>
+    <div th:if="${msg != null}">
+        <form class="special-form">
+            <input type="text"  pattern="[0-9]{1}" maxlength="1" id="digit1" />
+            <input type="text"  pattern="[0-9]{1}" maxlength="1" id="digit2" />
+            <input type="text"  pattern="[0-9]{1}" maxlength="1" id="digit3" />
+            <input type="text"  pattern="[0-9]{1}" maxlength="1" id="digit4" />
+            <input type="text"  pattern="[0-9]{1}" maxlength="1" id="digit5" />
+            <input type="text"  pattern="[0-9]{1}" maxlength="1" id="digit6" />
+            <button th:class="button" type="submit" >validate</button>
+        </form>
+    </div>
 </main>
 </body>
 </html>

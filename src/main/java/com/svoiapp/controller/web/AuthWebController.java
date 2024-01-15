@@ -59,8 +59,7 @@ public class AuthWebController {
             pin = service.createUser(formData);
             if (pin != null && !pin.isEmpty()) {
                 mailService.authoriseEmail(pin, formData.getLogin(), formData.getEmail());
-                //model.addAttribute("confirmMsg", "Код для верификации был выслан на Ваш почтовый ящик. Также рекомендуем проверить папку 'СПАМ'.");
-                return "redirect:/";
+                return "redirect:/m/home";
             }
         }
         return "signin";
@@ -82,6 +81,8 @@ public class AuthWebController {
         else if (role.equals("ROLE_GUEST")){
             model.addAttribute("msg", "please sign in and confirm email to use our services");
         }
+        else
+            return "home";
         return "home";
     }
 
@@ -91,7 +92,7 @@ public class AuthWebController {
                             final Model model) {
         model.addAttribute("formData", new CreateLoginFromData());
         if (loginError == Boolean.TRUE) {
-            model.addAttribute("error", "worng login or password");
+            model.addAttribute("error", "wrong login or password");
         }
         return "login";}
 

@@ -13,6 +13,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,13 +28,14 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
             AuthenticationException exception)
             throws IOException, ServletException {
 
+        //response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         Map<String, Object> data = new HashMap<>();
         data.put(
                 "timestamp", Calendar.getInstance().getTime());
         data.put(
                 "exception", exception.getMessage());
-        logger.info("login for failed. details: "+ data);
+        logger.info("login failed. details: "+ data);
         response.sendRedirect("/w/login?loginError=true");
     }
 }

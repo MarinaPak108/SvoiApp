@@ -1,5 +1,6 @@
 package com.svoiapp.controller.web;
 
+import com.svoiapp.entity.DataEntity;
 import com.svoiapp.exception.CustomAuthHanlder;
 import com.svoiapp.formdata.CreateVisaExtendFormData;
 import com.svoiapp.service.DocService;
@@ -31,7 +32,7 @@ public class MainController {
         this.mailService = mailService;
     }
 
-    @RequestMapping("/home")
+    @GetMapping("/home")
     public String home (Model model) throws MessagingException {
         Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();
@@ -41,7 +42,10 @@ public class MainController {
             model.addAttribute("user", "Welcome to SVOI app");
         }
         else {
+            DataEntity data = service.getData(login);
             model.addAttribute("user", "Hi "+ login + ", welcome to SVOI app");
+            if(data.getPin() != null)
+                model.addAttribute("msg", "Код для верификации был выслан на Ваш почтовый ящик. Также рекомендуем проверить папку 'СПАМ'.");
         }
         return "home";
     }
