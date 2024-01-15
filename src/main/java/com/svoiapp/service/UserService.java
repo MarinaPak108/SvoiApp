@@ -1,23 +1,37 @@
 package com.svoiapp.service;
 
+import com.svoiapp.entity.AuthEntity;
 import com.svoiapp.entity.DataEntity;
 import com.svoiapp.formdata.CreateLoginFromData;
+import com.svoiapp.formdata.CreateUserFormData;
+import com.svoiapp.repo.AuthRepo;
 import com.svoiapp.repo.DataRepo;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Logger;
 
 @Service
 public class UserService {
     private static final Logger logger = Logger.getLogger(UserService.class.getName());
+    private final AuthRepo authRepo;
     private final DataRepo repo;
 
+    @Autowired
+    ModelMapper modelMapper;
 
-    public UserService(DataRepo repo) {
+    @Autowired
+    BCryptPasswordEncoder encoder;
+
+
+    public UserService(AuthRepo authRepo, DataRepo repo) {
+        this.authRepo = authRepo;
         this.repo = repo;
     }
 
@@ -54,13 +68,24 @@ public class UserService {
         return data.getConfirmed();
     }
 
-    public String authoriseEmail (Integer pin, String login, String email){
-        DataEntity data = repo.findDataEntityByLoginAndEmail(login, email);
+
+    public String createUser(CreateUserFormData formData) {
         try{
+            Random rnd = new Random();
+            int nmbr = rnd.nextInt(999999);
+            String pin =  String.format("%06d", nmbr);
+            DataEntity data = modelMapper.map(formData, DataEntity.class);
+            AuthEntity auth = authRepo.findAuthEntityByName("ROLE_GUEST");
+            data.setPwd(encoder.encode(formData.getPwd()));
+            data.setAuth(auth);
             data.setPin(pin);
+            data.setConfirmed(false);
             repo.save(data);
-            return "updated";
-        }catch (Exception e){
-            return e.getMessage();  }
+            return pin;
+        }
+        catch (Exception e){
+            logger.info(e.getMessage());
+        }
+        return null;
     }
 }

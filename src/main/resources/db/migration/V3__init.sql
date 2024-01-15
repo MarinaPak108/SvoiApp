@@ -1,0 +1,1 @@
+alter table data modify column pin varchar(10);

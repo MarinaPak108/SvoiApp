@@ -1,31 +1,42 @@
 package com.svoiapp.service;
+import com.svoiapp.repo.DataRepo;
 import jakarta.mail.MessagingException;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-import java.util.Properties;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class MailService {
-    @Autowired
-    private JavaMailSender mailSender;
 
-    public void sendHtmlEmail() throws MessagingException {
-        MimeMessage message = mailSender.createMimeMessage();
+    private final DataRepo repo;
+    private final EmailSender emailSender;
 
-        message.setFrom(new InternetAddress("svoi.korea@gmail.com"));
-        message.setRecipients(MimeMessage.RecipientType.TO, "pakmarina108@gmail.com");
-        message.setSubject("Test email from Spring");
+    public MailService(DataRepo repo, EmailSender emailSender) {
+        this.repo = repo;
+        this.emailSender = emailSender;
+    }
 
-        String htmlContent = "<h1>This is a test Spring Boot email</h1>" +
-                "<p>It can contain <strong>HTML</strong> content.</p>";
-        message.setContent(htmlContent, "text/html; charset=utf-8");
+    public void sendEmail(String reciever) throws MessagingException {
+        emailSender.sendPlainTextEmail("svoi.korea@outlook.com",
+                reciever,
+                "",
+                "Код для верификации электронной почты на сайте Свои в Корее: "+ String.valueOf(1234) +  " ."+ " Bведите Ваш код пройдя по ссылке: ",
+                true);
+    }
 
-        mailSender.send(message);
+    @Async
+    public CompletableFuture<Void> authoriseEmail (String pin, String login, String email){
+        try{
+            emailSender.sendPlainTextEmail("svoi.korea@outlook.com",
+                    email,
+                    "верификация электронной почты на сайте Свои в Корее",
+                    login + ", Ваш код для верификации электронной почты на сайте Свои в Корее:  <br>"+ String.valueOf(pin) + "<br> Bведите Ваш код пройдя по ссылке: .<br>"+ "",
+                    true);
+            return CompletableFuture.completedFuture(null);
+        }catch (Exception e){
+            CompletableFuture<Void> future = new CompletableFuture<>();
+            future.completeExceptionally(e);
+            return future;  }
     }
 }

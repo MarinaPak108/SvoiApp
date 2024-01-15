@@ -35,13 +35,13 @@ public class DataEntity {
 
     @Basic
     @Column(name = "pin")
-    private Integer pin;
+    private String pin;
 
     @Basic
     @Column(name = "confirmed")
     private Boolean confirmed;
 
-    public DataEntity(Long dataId, Date registered, AuthEntity auth, String login, String pwd, String email, Integer pin, Boolean confirmed) {
+    public DataEntity(Long dataId, Date registered, AuthEntity auth, String login, String pwd, String email, String pin, Boolean confirmed) {
         this.dataId = dataId;
         this.registered = registered;
         this.auth = auth;
@@ -105,11 +105,11 @@ public class DataEntity {
         this.email = email;
     }
 
-    public Integer getPin() {
+    public String getPin() {
         return pin;
     }
 
-    public void setPin(Integer pin) {
+    public void setPin(String pin) {
         this.pin = pin;
     }
 

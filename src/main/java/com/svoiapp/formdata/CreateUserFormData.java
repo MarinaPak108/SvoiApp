@@ -13,7 +13,7 @@ public class CreateUserFormData {
     @NotNull
     @Size(min =3, max=255)
     @ValidPassword
-    private String password;
+    private String pwd;
 
     @NotNull
     @Size(min =3, max=255)
@@ -27,12 +27,12 @@ public class CreateUserFormData {
         this.login = login;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPwd() {
+        return pwd;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 
     public String getEmail() {
@@ -44,6 +44,6 @@ public class CreateUserFormData {
     }
 
     public UserCreationParameters toParameters(){
-        return new UserCreationParameters(login, password, email);
+        return new UserCreationParameters(login, pwd, email);
     }
 }

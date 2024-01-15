@@ -6,7 +6,6 @@ import com.svoiapp.service.DocService;
 import com.svoiapp.service.MailService;
 import com.svoiapp.service.UserService;
 import jakarta.mail.MessagingException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -24,13 +23,12 @@ import java.io.IOException;
 public class MainController {
     private final UserService service;
     private final DocService dService;
+    private final MailService mailService;
 
-    @Autowired
-    public MailService mailService;
-
-    public MainController(UserService service, DocService dService) {
+    public MainController(UserService service, DocService dService, MailService mailService) {
         this.service = service;
         this.dService = dService;
+        this.mailService = mailService;
     }
 
     @RequestMapping("/home")
@@ -57,10 +55,6 @@ public class MainController {
         if(isEmailConfirmed){
             model.addAttribute("isChecked", true);
         }
-        //else {
-            //mailService.sendHtmlEmail();
-        //}
-
         model.addAttribute("userName", login);
         return"service";
     }

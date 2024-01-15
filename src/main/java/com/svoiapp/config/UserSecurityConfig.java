@@ -55,9 +55,10 @@ public class UserSecurityConfig {
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/images/**")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/m/service")).hasAnyRole("MEMBER")
+                        .requestMatchers(new AntPathRequestMatcher("/m/service")).hasAnyRole("MEMBER", "USER")
                         .requestMatchers(new AntPathRequestMatcher("/m/home")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/w/signin")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/m/visaExt")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/?continue")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/w/access-failed")).permitAll()

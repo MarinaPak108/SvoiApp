@@ -32,8 +32,8 @@
                     <p style="color: red" class="error-message" th:text="${message}"></p>
                 </li>
             </ul>
-            <input type="password" placeholder="Your password ..." required th:field = "*{password}">
-            <ul class="text-danger" th:each="error: ${#fields.errors('password')}">
+            <input type="password" placeholder="Your password ..." required th:field = "*{pwd}">
+            <ul class="text-danger" th:each="error: ${#fields.errors('pwd')}">
                 <li th:each="message : ${error.split(',')}">
                     <p style="color: red" class="error-message" th:text="${message}"></p>
                 </li>

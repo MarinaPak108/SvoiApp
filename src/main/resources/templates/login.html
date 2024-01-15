@@ -18,6 +18,7 @@
 
 <main>
     <div class = "center" style="color: red; font-size: 18px" th:if="${error != null}" th:text = "${error}"></div>
+    <div class = "center" style="color: darkblue; font-size: 18px" th:if="${confirmMsg != null}" th:text = "${confirmMsg}"></div>
     <form  th:object="${formData}"
            th:action="@{/w/login}"
            method="post">
