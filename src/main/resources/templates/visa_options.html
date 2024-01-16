@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Hide all input fields initially */
+        .hidden-input {
+            display: none;
+        }
+    </style>
+    <title>Dynamic Form Data</title>
+</head>
+<body>
+
+<form id="dynamicForm">
+    <input type="radio" id="option1" name="options" checked onclick="showForm('form1')">
+    <label for="option1">Option 1</label>
+
+    <input type="radio" id="option2" name="options" onclick="showForm('form2')">
+    <label for="option2">Option 2</label>
+
+    <div id="form1" class="hidden-input">
+        <label for="input1">Input 1:</label>
+        <input type="text" id="input1" name="input1">
+    </div>
+
+    <div id="form2" class="hidden-input">
+        <label for="input2">Input 2:</label>
+        <input type="text" id="input2" name="input2">
+    </div>
+
+    <!-- Add more radio buttons and corresponding form content as needed -->
+</form>
+
+<form th:object="${formData}"
+      th:action="@{/m/visaExt}"
+      method="post">
+    <div>
+        <input type="text"placeholder="Your name ..."  th:field = "*{name}" required >
+        <input type="text"placeholder="Your name ..."  th:field = "*{surname}" required >
+        <input type="hidden" list="visa" />
+        <select id="visa" name="visas" th:field = "*{visatype}">
+            <option value = "0"> Select Visa Type </option>
+            <option value = "f4"> F4 </option>
+            <option value = "h2"> H2 </option>
+        </select>
+
+        <div>
+            <button th:class="button" type="submit" >Sign In</button>
+        </div>
+    </div>
+
+</form>
+
+<script>
+    function showForm(formId) {
+        // Hide all forms
+        var forms = document.querySelectorAll('.hidden-input');
+        forms.forEach(function(form) {
+            form.style.display = 'none';
+        });
+
+        // Show the selected form
+        document.getElementById(formId).style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
