@@ -54,6 +54,7 @@ public class UserSecurityConfig {
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/images/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/m/service")).hasAnyRole("MEMBER", "USER")
                         .requestMatchers(new AntPathRequestMatcher("/m/home")).permitAll()

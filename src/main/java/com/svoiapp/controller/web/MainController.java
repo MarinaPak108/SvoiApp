@@ -7,10 +7,12 @@ import com.svoiapp.service.DocService;
 import com.svoiapp.service.MailService;
 import com.svoiapp.service.UserService;
 import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -69,7 +71,13 @@ public class MainController {
         return "visa";
     }
     @PostMapping("/visaExt")
-    public String processVisa (@ModelAttribute("formData") CreateVisaExtendFormData formData) throws IOException {
+    public String processVisa (@Valid  @ModelAttribute("formData") CreateVisaExtendFormData formData,
+                               BindingResult bindingResult
+    ) throws IOException {
+        CreateVisaExtendFormData fromUi = formData;
+        System.out.println(fromUi.getVisatype());
+        if(bindingResult.hasErrors())
+            return "visa";
         dService.replaceText(formData.getName()+formData.getVisatype());
         return "service";
     }

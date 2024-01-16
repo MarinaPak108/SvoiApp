@@ -22,6 +22,55 @@ h1 {
     text-align: center;
 }
 
+label {
+    font-size: 18px;
+    margin-right: 10px;
+    color: #34568b;
+}
+
+/* Basic styling for the select element */
+select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    display: inline-block;
+}
+
+/* Style when the select element is hovered */
+select:hover {
+    border-color: #888;
+}
+
+/* Style when the select element is focused */
+select:focus {
+    background-color: #7d9ccf;
+    border: #34568b;
+}
+
+/* Style for the dropdown arrow */
+select::after {
+    content: '\25BC'; /* Unicode character for the down arrow */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none; /* Ensure the arrow does not interfere with the select element */
+}
+
+/* Style for the options within the dropdown */
+select option {
+    background-color: #7d9ccf;
+    color: #333;
+}
+
+/* Style for the options on hover */
+select option:hover {
+    background-color: #34568b;
+}
+
 input:focus{
     background-color: #7d9ccf;
     border: #34568b;
@@ -52,6 +101,20 @@ input[type="email"]{
     border-radius: 4px;
     cursor: pointer;
     font-size: 18px;
+    display: inline-block;
+}
+input[type="date"] {
+    padding: 12px 20px;
+    font-size: 18px;
+    border: 2px solid #34568b;
+    border-radius: 4px;
+    margin: 8px 0;
+    cursor: pointer;
+}
+/* Optional: Style the calendar icon in Chrome and Safari */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    width: 15%;
+    background: transparent;
     display: inline-block;
 }
 
@@ -194,4 +257,24 @@ div{
 .special-form button {
     /* Add styles for the button here */
     grid-row: 2; /* Place the button in the second row */
+}
+
+/* Hide all input fields initially */
+.hidden-form {
+    display: none;
+}
+
+#inputContainer {
+    display: none;  /* Initially hide the school container */
+}
+#inputContainer2 {
+    display: none;  /* Initially hide the school container */
+}
+
+#inputContainerWork {
+    display: none;  /* Initially hide the work container */
+}
+
+#inputContainerWork2 {
+    display: none;  /* Initially hide the work container */
 }

@@ -17,31 +17,167 @@
 </div>
 
 <main>
-    <h1>SERVICE MENU</h1>
-    <p> Service page</p>
-    <h2> Operation complete</h2>
+    <h1>Форма для подачи (виза)</h1>
+    <h2>Заполните форму</h2>
 
-    <form th:object="${formData}"
+    <input type="radio" id="option1" name="options" onclick="showForm('form1')">
+    <label for="option1">visa</label>
+
+    <input type="radio" id="option2" name="options" onclick="showForm('form2')">
+    <label for="option2">F4</label>
+
+    <!-- для виз -->
+    <form id="form1" class="hidden-form" th:object="${formData}"
           th:action="@{/m/visaExt}"
           method="post">
         <div>
-            <input type="text"placeholder="Your name ..."  th:field = "*{name}" required >
-            <input type="text"placeholder="Your name ..."  th:field = "*{surname}" required >
-            <input type="text"placeholder="Your address ..."  th:field = "*{address}" required >
+            <input type="hidden" th:value = "other" th:field = "*{visatype}">
             <input type="hidden" list="visa" />
-            <select id="visa" name="visas" th:field = "*{visatype}">
-                <option value = "0"> Select Visa Type </option>
-                <option value = "f4"> F4 </option>
-                <option value = "h2"> H2 </option>
+            <select id="visa" name="visas" th:field = "*{reason}">
+                <option th:value = "0"> Цель подачи </option>
+                <option th:value = "впервые"> впервые выпуск </option>
+                <option th:value = "перевыпуск"> перевыпуск </option>
+                <option th:value = "продление"> продление </option>
+                <option th:value = "смена"> смена статуса визы </option>
+                <option th:value = "получение"> получение </option>
+                <option th:value = "работа"> смена работы </option>
+                <option th:value = "въезд"> разрешение на повторный въезд </option>
+                <option th:value = "адрес"> смена адреса места жительства </option>
+                <option th:value = "данные"> изменение данных </option>
             </select>
+            <input type="text"placeholder="Фамилия ..."  th:field = "*{surname}" required >
+            <input type="text"placeholder="Имя ..."  th:field = "*{name}" required >
+            <label for="calendar">Дата рождения:</label>
+            <input type="date" id="calendar" name="calendar" th:field = "*{bdate}">
+            <input type="hidden" list="sex" />
+            <select id="sex" name="sex" th:field = "*{sex}">
+                <option th:value = "0"> Пол </option>
+                <option th:value = "м"> мужской </option>
+                <option th:value = "ж"> женский </option>
+            </select>
+            <input type="text"placeholder="Гражданство ..."  th:field = "*{nationality}" required >
+            <input type="text"placeholder="Номер ай ди кады..."  th:field = "*{idNumber}" required >
+            <input type="text"placeholder="Номер паспорта ..."  th:field = "*{passno}" required >
+            <label for="passdate">Дата выдачи паспорта:</label>
+            <input type="date" id="passdate" th:field = "*{passdate}">
+            <label for="passexp">Срок годности паспорта:</label>
+            <input type="date" id="passexp" th:field = "*{passexp}">
+            <input type="text"placeholder="Адрес в Корее ..."  th:field = "*{koraddress}" required >
+            <input type="text"placeholder="Номер телефона в Корее. Должен начинаться с 010 ..."  th:field = "*{mobileno}" required >
+            <input type="text"placeholder="Адрес на родине ..."  th:field = "*{homeaddress}" required >
+            <label for="toggleSwitch">Заявитель посещает учебное заведение (детский сад или школу) </label>
+            <input type="checkbox" id="toggleSwitch" onchange="toggleInputs()">
 
-            <div>
-                <button th:class="button" type="submit" >Sign In</button>
+            <div id="inputContainer">
+                <input type="hidden" list="sstatus" />
+                <select id="sstatus"  th:field = "*{schoolstatus}">
+                    <option th:value = "0"> Учебное заведение </option>
+                    <option th:value = "сад"> дошкольное учебное заведение (ючивон, ориничиб, сад, ясли) </option>
+                    <option th:value = "начальная"> начальная школа </option>
+                    <option th:value = "средняя"> средняя школа  </option>
+                    <option th:value = "старшая"> старшая школа  </option>
+                </select>
+                <input type="text"placeholder="Название учебного заведения ..."  th:field = "*{schoolname}">
+                <input type="text"placeholder="Номер телефона учебного заведения ..."  th:field = "*{schooltel}">
+
+                <input type="hidden" list="stype" />
+                <select id="stype"  th:field = "*{schooltype}">
+                    <option th:value = "0"> Тип учебного заведения </option>
+                    <option th:value = "аккредитованно"> учебное заведение, аккредитованное мин образования Кореи </option>
+                    <option th:value = "неаккредитованно"> учебное заведение, НЕ аккредитованное мин образования Кореи </option>
+                </select>
             </div>
+            <label for="toggleSwitchWork">Заявитель работает</label>
+            <input type="checkbox" id="toggleSwitchWork" onchange="toggleInputsWork()">
+            <div id="inputContainerWork">
+                <input type="text"placeholder="Название текущего места работы ..."  th:field = "*{compname}" >
+                <input type="text"placeholder="Идентификационный номер текущего предприятия (саопча) ..."  th:field = "*{compno}" >
+                <input type="text"placeholder="Номер телефона текущего предприятия ..."  th:field = "*{comptel}" >
+                <input type="text"placeholder="Годовая заработная плата ..."  th:field = "*{salary}">
+                <input type="text"placeholder="Занимаемая должность ..."  th:field = "*{position}">
+                <input type="text"placeholder="Название НОВОГО места работы (ТОЛЬКО в случае смены места работы) ..."  th:field = "*{compnameNew}">
+                <input type="text"placeholder="Идентификационный номер НОВОГО предприятия (ТОЛЬКО в случае смены места работы) ..."  th:field = "*{compnoNew}">
+                <input type="text"placeholder="Номер телефона НОВОГО предприятия (ТОЛЬКО в случае смены места работы) ..."  th:field = "*{comptelNew}">
+            </div>
+            <input type="text"placeholder="Номер счета в банке (Только в случае выпуска впервые ай ди кады или перевыпуска) ..."  th:field = "*{bankno}">
         </div>
+        <button th:class="button" type="button"  onclick="submitForm('form1')">Заполнить заявку</button>
+    </form>
 
+    <!-- для F4 визы -->
+    <form id="form2" class="hidden-form" th:object="${formData}"
+          th:action="@{/m/visaExt}"
+          method="post">
+        <div>
+            <input type="hidden" th:value = "f4" th:field = "*{visatype}">
+            <input type="hidden" list="visa2" />
+            <select id="visa2" name="visas" th:field = "*{reason}">
+                <option th:value = "0"> Цель подачи </option>
+                <option th:value = "впервые"> впервые выпуск </option>
+                <option th:value = "адрес"> смена адреса места жительства </option>
+                <option th:value = "перевыпуск"> перевыпуск </option>
+                <option th:value = "продление"> продление </option>
+                <option th:value = "смена"> смена статуса визы </option>
+                <option th:value = "получение"> получение </option>
+            </select>
+            <input type="text"placeholder="Фамилия ..."  th:field = "*{surname}" required >
+            <input type="text"placeholder="Имя ..."  th:field = "*{name}" required >
+            <label for="calendar2">Дата рождения:</label>
+            <input type="date" id="calendar2" name="calendar" th:field = "*{bdate}">
+            <input type="hidden" list="sex2" />
+            <select id="sex2" name="sex" th:field = "*{sex}">
+                <option th:value = "0"> Пол </option>
+                <option th:value = "м"> мужской </option>
+                <option th:value = "ж"> женский </option>
+            </select>
+            <input type="text"placeholder="Гражданство ..."  th:field = "*{nationality}" required >
+            <input type="text"placeholder="Номер ай ди кады..."  th:field = "*{idNumber}" required >
+            <input type="text"placeholder="Номер паспорта ..."  th:field = "*{passno}" required >
+            <label for="passdate2">Дата выдачи паспорта:</label>
+            <input type="date" id="passdate2" th:field = "*{passdate}">
+            <label for="passexp2">Срок годности паспорта:</label>
+            <input type="date" id="passexp2" th:field = "*{passexp}">
+            <input type="text"placeholder="Адрес в Корее ..."  th:field = "*{koraddress}" required >
+            <input type="text"placeholder="Номер телефона в Корее. Должен начинаться с 010 ..."  th:field = "*{mobileno}" required >
+            <input type="text"placeholder="Адрес на родине ..."  th:field = "*{homeaddress}" required >
+            <label for="toggleSwitch2">Заявитель посещает учебное заведение (детский сад или школу) </label>
+            <input type="checkbox" id="toggleSwitch2" onchange="toggleInputs2()">
+
+            <div id="inputContainer2">
+                <input type="hidden" list="sstatus2" />
+                <select id="sstatus2"  th:field = "*{schoolstatus}">
+                    <option th:value = "0"> Учебное заведение </option>
+                    <option th:value = "сад"> дошкольное учебное заведение (ючивон, ориничиб, сад, ясли) </option>
+                    <option th:value = "начальная"> начальная школа </option>
+                    <option th:value = "средняя"> средняя школа  </option>
+                    <option th:value = "старшая"> старшая школа  </option>
+                </select>
+                <input type="text"placeholder="Название учебного заведения ..."  th:field = "*{schoolname}">
+                <input type="text"placeholder="Номер телефона учебного заведения ..."  th:field = "*{schooltel}">
+
+                <input type="hidden" list="stype2" />
+                <select id="stype2"  th:field = "*{schooltype}">
+                    <option th:value = "0"> Тип учебного заведения </option>
+                    <option th:value = "аккредитованно"> учебное заведение, аккредитованное мин образования Кореи </option>
+                    <option th:value = "неаккредитованно"> учебное заведение, НЕ аккредитованное мин образования Кореи </option>
+                </select>
+            </div>
+
+            <label for="toggleSwitchWork2">Заявитель работает</label>
+            <input type="checkbox" id="toggleSwitchWork2" onchange="toggleInputsWork2()">
+            <div id="inputContainerWork2">
+                <input type="text"placeholder="Название места работы ..."  th:field = "*{compname}" >
+                <input type="text"placeholder="Идентификационный номер предприятия (саопча) ..."  th:field = "*{compno}" >
+                <input type="text"placeholder="Номер телефона предприятия ..."  th:field = "*{comptel}" >
+                <input type="text"placeholder="Занимаемая должность ..."  th:field = "*{position}">
+            </div>
+            <input type="text"placeholder="Номер счета в банке (Только в случае выпуска впервые ай ди кады или перевыпуска) ..."  th:field = "*{bankno}">
+        </div>
+        <button th:class="button" type="button"  onclick="submitForm('form2')">Заполнить заявку</button>
     </form>
 </main>
+<!-- Include script1.js using Thymeleaf -->
+<script th:src="@{/js/visa.js}"></script>
 
 </body>
 </html>
