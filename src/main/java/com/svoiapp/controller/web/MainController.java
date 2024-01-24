@@ -71,13 +71,10 @@ public class MainController {
         return "visa";
     }
     @PostMapping("/visaExt")
-    public String processVisa (@Valid  @ModelAttribute("formData") CreateVisaExtendFormData formData,
-                               BindingResult bindingResult
+    public String processVisa (@ModelAttribute("formData") CreateVisaExtendFormData formData
     ) throws IOException {
         CreateVisaExtendFormData fromUi = formData;
         System.out.println(fromUi.getVisatype());
-        if(bindingResult.hasErrors())
-            return "visa";
         dService.replaceText(formData.getName()+formData.getVisatype());
         return "service";
     }

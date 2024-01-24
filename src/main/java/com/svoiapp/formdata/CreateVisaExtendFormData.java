@@ -1,25 +1,37 @@
 package com.svoiapp.formdata;
 
 import com.svoiapp.exception.StartsWith;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class CreateVisaExtendFormData {
     private String visatype;
+    @NotNull
     private String reason;
+    @NotNull
     private String surname;
+    @NotNull
     private String name;
+    @NotNull
     private String bdate;
+    @NotNull
     private String sex;
+    @NotNull
     private String nationality;
     @Size(min = 13, max = 13, message = "Введите 13 значный номер айди карты.")
     private String idNumber;
+    @NotNull
     private String passno;
+    @NotNull
     private String passdate;
+    @NotNull
     private String passexp;
+    @NotNull
     private String koraddress;
     @StartsWith(value = "010")
     @Size(min = 11, max = 11, message = "The string must be exactly 10 characters long.")
     private String mobileno;
+    @NotNull
     private String homeaddress;
     private String schoolstatus;
     private String schoolname;

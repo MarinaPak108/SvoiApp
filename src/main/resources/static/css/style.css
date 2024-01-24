@@ -8,6 +8,10 @@ p.error {
     color: red;
 }
 
+.error-message {
+    color: red;
+}
+
 h1 {
     color: #34568b;
 }

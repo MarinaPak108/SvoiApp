@@ -45,26 +45,39 @@
                 <option th:value = "адрес"> смена адреса места жительства </option>
                 <option th:value = "данные"> изменение данных </option>
             </select>
-            <input type="text"placeholder="Фамилия ..."  th:field = "*{surname}" required >
-            <input type="text"placeholder="Имя ..."  th:field = "*{name}" required >
-            <label for="calendar">Дата рождения:</label>
-            <input type="date" id="calendar" name="calendar" th:field = "*{bdate}">
+            <p id="visaerr" class="error-message"></p>
+            <input type="text"placeholder="Фамилия (как в загран паспорте)..."  id="surname" th:field = "*{surname}" required >
+            <p id="surnameerr" class="error-message"></p>
+            <input type="text"placeholder="Имя  (как в загран паспорте)..."  id="name" th:field = "*{name}" required >
+            <p id="nameerr" class="error-message"></p>
+            <label for="calendar2">Дата рождения:</label>
+            <input type="date" id="calendar" name="calendar2" th:field = "*{bdate}">
+            <p id="calendarerr" class="error-message"></p>
             <input type="hidden" list="sex" />
             <select id="sex" name="sex" th:field = "*{sex}">
                 <option th:value = "0"> Пол </option>
                 <option th:value = "м"> мужской </option>
                 <option th:value = "ж"> женский </option>
             </select>
-            <input type="text"placeholder="Гражданство ..."  th:field = "*{nationality}" required >
-            <input type="text"placeholder="Номер ай ди кады..."  th:field = "*{idNumber}" required >
-            <input type="text"placeholder="Номер паспорта ..."  th:field = "*{passno}" required >
+            <p id="sexerr" class="error-message"></p>
+            <input id="nationality" type="text"placeholder="Гражданство ..."  th:field = "*{nationality}" required >
+            <p id="nationalityerr" class="error-message"></p>
+            <input id="idNumber" type="text"placeholder="Номер ай ди кады..."  th:field = "*{idNumber}" required >
+            <p id="idNumbererr" class="error-message"></p>
+            <input id="passno" type="text"placeholder="Номер паспорта ..."  th:field = "*{passno}" required >
+            <p id="passnoerr" class="error-message"></p>
             <label for="passdate">Дата выдачи паспорта:</label>
             <input type="date" id="passdate" th:field = "*{passdate}">
+            <p id="passdateerr" class="error-message"></p>
             <label for="passexp">Срок годности паспорта:</label>
             <input type="date" id="passexp" th:field = "*{passexp}">
-            <input type="text"placeholder="Адрес в Корее ..."  th:field = "*{koraddress}" required >
-            <input type="text"placeholder="Номер телефона в Корее. Должен начинаться с 010 ..."  th:field = "*{mobileno}" required >
-            <input type="text"placeholder="Адрес на родине ..."  th:field = "*{homeaddress}" required >
+            <p id="passexperr" class="error-message"></p>
+            <input type="text" id="koraddress" placeholder="Адрес в Корее ..."  th:field = "*{koraddress}" required >
+            <p id="koraddresserr" class="error-message"></p>
+            <input type="text" id="telno" placeholder="Номер телефона в Корее. Должен начинаться с 010 без пробелов(на пример: 01012345678)..."  th:field = "*{mobileno}" required >
+            <p id="telnoerr" class="error-message"></p>
+            <input type="text" id="homeaddress" placeholder="Адрес на родине ..."  th:field = "*{homeaddress}" required >
+            <p id="homeaddresserr" class="error-message"></p>
             <label for="toggleSwitch">Заявитель посещает учебное заведение (детский сад или школу) </label>
             <input type="checkbox" id="toggleSwitch" onchange="toggleInputs()">
 
@@ -120,26 +133,39 @@
                 <option th:value = "смена"> смена статуса визы </option>
                 <option th:value = "получение"> получение </option>
             </select>
-            <input type="text"placeholder="Фамилия ..."  th:field = "*{surname}" required >
-            <input type="text"placeholder="Имя ..."  th:field = "*{name}" required >
+            <p id="visa2err" class="error-message"></p>
+            <input type="text"placeholder="Фамилия (как в загран паспорте)..."  id="surname2" th:field = "*{surname}" required >
+            <p id="surname2err" class="error-message"></p>
+            <input type="text"placeholder="Имя  (как в загран паспорте)..."  id="name2" th:field = "*{name}" required >
+            <p id="name2err" class="error-message"></p>
             <label for="calendar2">Дата рождения:</label>
-            <input type="date" id="calendar2" name="calendar" th:field = "*{bdate}">
+            <input type="date" id="calendar2" name="calendar2" th:field = "*{bdate}">
+            <p id="calendar2err" class="error-message"></p>
             <input type="hidden" list="sex2" />
             <select id="sex2" name="sex" th:field = "*{sex}">
                 <option th:value = "0"> Пол </option>
                 <option th:value = "м"> мужской </option>
                 <option th:value = "ж"> женский </option>
             </select>
-            <input type="text"placeholder="Гражданство ..."  th:field = "*{nationality}" required >
-            <input type="text"placeholder="Номер ай ди кады..."  th:field = "*{idNumber}" required >
-            <input type="text"placeholder="Номер паспорта ..."  th:field = "*{passno}" required >
+            <p id="sex2err" class="error-message"></p>
+            <input id="nationality2" type="text"placeholder="Гражданство ..."  th:field = "*{nationality}" required >
+            <p id="nationality2err" class="error-message"></p>
+            <input id="idNumber2" type="text"placeholder="Номер ай ди кады..."  th:field = "*{idNumber}" required >
+            <p id="idNumber2err" class="error-message"></p>
+            <input id="passno2" type="text"placeholder="Номер паспорта ..."  th:field = "*{passno}" required >
+            <p id="passno2err" class="error-message"></p>
             <label for="passdate2">Дата выдачи паспорта:</label>
             <input type="date" id="passdate2" th:field = "*{passdate}">
+            <p id="passdate2err" class="error-message"></p>
             <label for="passexp2">Срок годности паспорта:</label>
             <input type="date" id="passexp2" th:field = "*{passexp}">
-            <input type="text"placeholder="Адрес в Корее ..."  th:field = "*{koraddress}" required >
-            <input type="text"placeholder="Номер телефона в Корее. Должен начинаться с 010 ..."  th:field = "*{mobileno}" required >
-            <input type="text"placeholder="Адрес на родине ..."  th:field = "*{homeaddress}" required >
+            <p id="passexp2err" class="error-message"></p>
+            <input type="text" id="koraddress2" placeholder="Адрес в Корее ..."  th:field = "*{koraddress}" required >
+            <p id="koraddress2err" class="error-message"></p>
+            <input type="text" id="telno2" placeholder="Номер телефона в Корее. Должен начинаться с 010 без пробелов(на пример: 01012345678)..."  th:field = "*{mobileno}" required >
+            <p id="telno2err" class="error-message"></p>
+            <input type="text" id="homeaddress2" placeholder="Адрес на родине ..."  th:field = "*{homeaddress}" required >
+            <p id="homeaddress2err" class="error-message"></p>
             <label for="toggleSwitch2">Заявитель посещает учебное заведение (детский сад или школу) </label>
             <input type="checkbox" id="toggleSwitch2" onchange="toggleInputs2()">
 
