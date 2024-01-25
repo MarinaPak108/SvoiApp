@@ -39,6 +39,7 @@ public class UserService {
         return repo.findDataEntityByLogin(login);
     }
 
+
     public List<Boolean> isUserExists (CreateLoginFromData loginForm){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         List<Boolean> resultList = new ArrayList<>();

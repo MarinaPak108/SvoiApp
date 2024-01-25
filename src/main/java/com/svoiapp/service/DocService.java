@@ -4,18 +4,71 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 
+import com.svoiapp.component.VisaFillFormHashmap;
+import com.svoiapp.component.VisaReasonHashmap;
+import com.svoiapp.formdata.CreateVisaExtendFormData;
+import com.svoiapp.formdata.FillVisaExtendFormData;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DocService {
+    private final VisaReasonHashmap visaReasonHashmap;
+    private final VisaFillFormHashmap visaFillFormHashmap;
+
+    @Autowired
+    public DocService(VisaReasonHashmap visaReasonHashmap, VisaFillFormHashmap visaFillFormHashmap) {
+        this.visaReasonHashmap = visaReasonHashmap;
+        this.visaFillFormHashmap = visaFillFormHashmap;
+    }
+
+    //check if isSchool
+    public Boolean checkIsSchool (CreateVisaExtendFormData data){
+        if(data.getSchoolname()!= ""){
+            return true;
+        }
+        else
+            return false;
+    }
+    //prepare entity to fill visa
+    public HashMap<String, String> prepareEntity (CreateVisaExtendFormData data, String visaType, Boolean isSchool){
+        data.convertNullFieldsToString(data);
+        HashMap<String, String> newHashmap = visaFillFormHashmap.preFillHashMap(data, visaType);
+        newHashmap = fillGenderVisa(newHashmap, data.getSex());
+        newHashmap = fillVisaReason(newHashmap, data.getReason());
+        return newHashmap;
+    }
+
+    //fill dropdown gender
+    private HashMap<String, String> fillGenderVisa (HashMap<String, String> data, String gender){
+        if(gender.equals("м")){
+            data.put("@7", "x");
+        } else if (gender.equals("ж")){
+            data.put("@8","x");
+        }
+        return data;
+    }
+
+    //fill dropdown visa reason
+    public HashMap<String, String> fillVisaReason (HashMap<String, String> data, String reason) {
+        HashMap<String, String> hashMap = visaReasonHashmap.getHashMap();
+        //convert to visaFillField
+        String valueField = hashMap.get(reason);
+        data.put(valueField, "x");
+        return data;
+    }
 
     public void replaceText(String UserNameAndVisaType) throws IOException {
         String filePath = getClass().getClassLoader()

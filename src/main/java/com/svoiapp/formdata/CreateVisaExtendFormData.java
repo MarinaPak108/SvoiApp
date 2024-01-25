@@ -4,34 +4,21 @@ import com.svoiapp.exception.StartsWith;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.lang.reflect.Field;
+
 public class CreateVisaExtendFormData {
-    private String visatype;
-    @NotNull
     private String reason;
-    @NotNull
     private String surname;
-    @NotNull
     private String name;
-    @NotNull
     private String bdate;
-    @NotNull
     private String sex;
-    @NotNull
     private String nationality;
-    @Size(min = 13, max = 13, message = "Введите 13 значный номер айди карты.")
     private String idNumber;
-    @NotNull
     private String passno;
-    @NotNull
     private String passdate;
-    @NotNull
     private String passexp;
-    @NotNull
     private String koraddress;
-    @StartsWith(value = "010")
-    @Size(min = 11, max = 11, message = "The string must be exactly 10 characters long.")
     private String mobileno;
-    @NotNull
     private String homeaddress;
     private String schoolstatus;
     private String schoolname;
@@ -46,13 +33,11 @@ public class CreateVisaExtendFormData {
     private String comptelNew;
     private String salary;
     private String bankno;
-    private String data;
 
     public CreateVisaExtendFormData() {
     }
 
-    public CreateVisaExtendFormData(String visatype,
-                                    String reason,
+    public CreateVisaExtendFormData(String reason,
                                     String surname,
                                     String name,
                                     String bdate,
@@ -77,9 +62,7 @@ public class CreateVisaExtendFormData {
                                     String compnoNew,
                                     String comptelNew,
                                     String salary,
-                                    String bankno,
-                                    String data) {
-        this.visatype = visatype;
+                                    String bankno) {
         this.reason = reason;
         this.surname = surname;
         this.name = name;
@@ -106,15 +89,6 @@ public class CreateVisaExtendFormData {
         this.comptelNew = comptelNew;
         this.salary = salary;
         this.bankno = bankno;
-        this.data = data;
-    }
-
-    public String getVisatype() {
-        return visatype;
-    }
-
-    public void setVisatype(String visatype) {
-        this.visatype = visatype;
     }
 
     public String getReason() {
@@ -325,11 +299,30 @@ public class CreateVisaExtendFormData {
         this.bankno = bankno;
     }
 
-    public String getData() {
-        return data;
-    }
+    public CreateVisaExtendFormData convertNullFieldsToString (CreateVisaExtendFormData data){
+        // Get the class of the provided entity
+        Class<?> clazz = data.getClass();
 
-    public void setData(String data) {
-        this.data = data;
+        // Get all fields of the entity class
+        Field[] fields = clazz.getDeclaredFields();
+
+        // Iterate over each field
+        for (Field field : fields) {
+            try {
+                // Get the value of the field from the entity object
+                Object value = field.get(data);
+
+                if(value == null){
+                    // Ensure field is accessible (even if it's private)
+                    field.setAccessible(true);
+                    // Set the field to an empty string
+                    field.set(data, "");
+                    field.setAccessible(false);
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return data;
     }
 }

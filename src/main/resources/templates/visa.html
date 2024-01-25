@@ -31,7 +31,7 @@
           th:action="@{/m/visaExt}"
           method="post">
         <div>
-            <input type="hidden" th:value = "other" th:field = "*{visatype}">
+            <input type="hidden" name="visatype" value = "other" />
             <input type="hidden" list="visa" />
             <select id="visa" name="visas" th:field = "*{reason}">
                 <option th:value = "0"> Цель подачи </option>
@@ -122,7 +122,7 @@
           th:action="@{/m/visaExt}"
           method="post">
         <div>
-            <input type="hidden" th:value = "f4" th:field = "*{visatype}">
+            <input type="hidden" name="visatype" value = "f4" />
             <input type="hidden" list="visa2" />
             <select id="visa2" name="visas" th:field = "*{reason}">
                 <option th:value = "0"> Цель подачи </option>
@@ -168,7 +168,6 @@
             <p id="homeaddress2err" class="error-message"></p>
             <label for="toggleSwitch2">Заявитель посещает учебное заведение (детский сад или школу) </label>
             <input type="checkbox" id="toggleSwitch2" onchange="toggleInputs2()">
-
             <div id="inputContainer2">
                 <input type="hidden" list="sstatus2" />
                 <select id="sstatus2"  th:field = "*{schoolstatus}">

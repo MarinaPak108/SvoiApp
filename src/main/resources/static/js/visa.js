@@ -100,6 +100,7 @@ function submitForm(formId) {
             isMobile(telno2, telno2err)&&
             homeaddress2!==""
         ){
+            //document.getElementById('visatype2').value = /*[[${'f4'}]]*/ '';
             document.getElementById(formId).submit();
         }
         else {
@@ -196,6 +197,7 @@ function submitForm(formId) {
             isMobile(telno, telnoerr)&&
             homeaddress!==""
         ){
+            //document.getElementById('visatype').value = /*[[${'other'}]]*/ '';
             document.getElementById(formId).submit();
         }
         else {

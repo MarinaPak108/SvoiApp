@@ -1,5 +1,10 @@
 package com.svoiapp.formdata;
 
+import org.springframework.cglib.core.Local;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class FillVisaExtendFormData {
     private String reason1;
     private String reason2;
@@ -18,7 +23,6 @@ public class FillVisaExtendFormData {
     private String sex7;
     private String sex8;
     private String nationality;
-    private String idNumber;
     private String idNumber9;
     private String idNumber10;
     private String idNumber11;
@@ -60,24 +64,12 @@ public class FillVisaExtendFormData {
     public FillVisaExtendFormData() {
     }
 
-    public FillVisaExtendFormData(String reason1,
-                                  String reason2,
-                                  String reason3,
-                                  String reason4,
-                                  String reason5,
-                                  String reason6,
-                                  String reason0,
-                                  String reason00,
-                                  String reason000,
-                                  String surname,
+    public FillVisaExtendFormData(String surname,
                                   String name,
                                   String byear,
                                   String bmon,
                                   String bday,
-                                  String sex7,
-                                  String sex8,
                                   String nationality,
-                                  String idNumber,
                                   String idNumber9,
                                   String idNumber10,
                                   String idNumber11,
@@ -97,14 +89,8 @@ public class FillVisaExtendFormData {
                                   String koraddress,
                                   String mobileno,
                                   String homeaddress,
-                                  String schoolstatus3135,
-                                  String schoolstatus3236,
-                                  String schoolstatus3337,
-                                  String schoolstatus3438,
                                   String schoolname,
                                   String schooltel,
-                                  String schooltype3941,
-                                  String schooltype4042,
                                   String position,
                                   String compname,
                                   String compno,
@@ -115,24 +101,23 @@ public class FillVisaExtendFormData {
                                   String salary,
                                   String bankno,
                                   String data) {
-        this.reason1 = reason1;
-        this.reason2 = reason2;
-        this.reason3 = reason3;
-        this.reason4 = reason4;
-        this.reason5 = reason5;
-        this.reason6 = reason6;
-        this.reason0 = reason0;
-        this.reason00 = reason00;
-        this.reason000 = reason000;
+        this.reason1 = "";
+        this.reason2 = "";
+        this.reason3 = "";
+        this.reason4 = "";
+        this.reason5 = "";
+        this.reason6 = "";
+        this.reason0 = "";
+        this.reason00 = "";
+        this.reason000 = "";
         this.surname = surname;
         this.name = name;
         this.byear = byear;
         this.bmon = bmon;
         this.bday = bday;
-        this.sex7 = sex7;
-        this.sex8 = sex8;
+        this.sex7 = "";
+        this.sex8 = "";
         this.nationality = nationality;
-        this.idNumber = idNumber;
         this.idNumber9 = idNumber9;
         this.idNumber10 = idNumber10;
         this.idNumber11 = idNumber11;
@@ -152,14 +137,14 @@ public class FillVisaExtendFormData {
         this.koraddress = koraddress;
         this.mobileno = mobileno;
         this.homeaddress = homeaddress;
-        this.schoolstatus3135 = schoolstatus3135;
-        this.schoolstatus3236 = schoolstatus3236;
-        this.schoolstatus3337 = schoolstatus3337;
-        this.schoolstatus3438 = schoolstatus3438;
+        this.schoolstatus3135 = "";
+        this.schoolstatus3236 = "";
+        this.schoolstatus3337 = "";
+        this.schoolstatus3438 = "";
         this.schoolname = schoolname;
         this.schooltel = schooltel;
-        this.schooltype3941 = schooltype3941;
-        this.schooltype4042 = schooltype4042;
+        this.schooltype3941 = "";
+        this.schooltype4042 = "";
         this.position = position;
         this.compname = compname;
         this.compno = compno;
@@ -306,14 +291,6 @@ public class FillVisaExtendFormData {
 
     public void setNationality(String nationality) {
         this.nationality = nationality;
-    }
-
-    public String getIdNumber() {
-        return idNumber;
-    }
-
-    public void setIdNumber(String idNumber) {
-        this.idNumber = idNumber;
     }
 
     public String getIdNumber9() {
@@ -611,4 +588,5 @@ public class FillVisaExtendFormData {
     public void setData(String data) {
         this.data = data;
     }
+
 }

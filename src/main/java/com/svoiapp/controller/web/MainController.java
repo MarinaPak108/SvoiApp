@@ -3,10 +3,12 @@ package com.svoiapp.controller.web;
 import com.svoiapp.entity.DataEntity;
 import com.svoiapp.exception.CustomAuthHanlder;
 import com.svoiapp.formdata.CreateVisaExtendFormData;
+import com.svoiapp.formdata.FillVisaExtendFormData;
 import com.svoiapp.service.DocService;
 import com.svoiapp.service.MailService;
 import com.svoiapp.service.UserService;
 import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 
 @Controller
@@ -71,11 +74,13 @@ public class MainController {
         return "visa";
     }
     @PostMapping("/visaExt")
-    public String processVisa (@ModelAttribute("formData") CreateVisaExtendFormData formData
-    ) throws IOException {
-        CreateVisaExtendFormData fromUi = formData;
-        System.out.println(fromUi.getVisatype());
-        dService.replaceText(formData.getName()+formData.getVisatype());
+    public String processVisa (@ModelAttribute("formData") CreateVisaExtendFormData formData,
+                               HttpServletRequest request
+    ) throws IOException, IllegalAccessException {
+        String visaType = request.getParameter("visatype");
+        Boolean isSchool = dService.checkIsSchool(formData);
+        HashMap<String, String> data = dService.prepareEntity(formData, visaType, isSchool);
+        //dService.replaceText(formData.getName()+formData);
         return "service";
     }
 
