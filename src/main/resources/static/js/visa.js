@@ -213,8 +213,10 @@ function toggleInputs() {
 
     // Toggle the visibility of input fields based on the toggle switch
     if (toggleSwitch.checked) {
+        toggleSwitch.value = "true";
         inputContainer.style.display = "block";
     } else {
+        toggleSwitch.value = "false";
         inputContainer.style.display = "none";
     }
 }
@@ -225,8 +227,10 @@ function toggleInputs2() {
 
     // Toggle the visibility of input fields based on the toggle switch
     if (toggleSwitch2.checked) {
+        toggleSwitch2.value = "true";
         inputContainer2.style.display = "block";
     } else {
+        toggleSwitch2.value = "false";
         inputContainer2.style.display = "none";
     }
 }
@@ -237,8 +241,10 @@ function toggleInputsWork() {
 
     // Toggle the visibility of input fields based on the toggle switch
     if (toggleSwitchWork.checked) {
+        toggleSwitchWork.value = "true";
         inputContainerWork.style.display = "block";
     } else {
+        toggleSwitchWork.value = "false";
         inputContainerWork.style.display = "none";
     }
 }
@@ -249,8 +255,10 @@ function toggleInputsWork2() {
 
     // Toggle the visibility of input fields based on the toggle switch
     if (toggleSwitchWork2.checked) {
+        toggleSwitchWork2.value = "true";
         inputContainerWork2.style.display = "block";
     } else {
+        toggleSwitchWork2.value = "false";
         inputContainerWork2.style.display = "none";
     }
 }

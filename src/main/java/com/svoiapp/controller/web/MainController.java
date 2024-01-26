@@ -77,10 +77,16 @@ public class MainController {
     public String processVisa (@ModelAttribute("formData") CreateVisaExtendFormData formData,
                                HttpServletRequest request
     ) throws IOException, IllegalAccessException {
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+        String[] loginEmail = authentication.getName().split("/__/");
+        String login = loginEmail[0];
         String visaType = request.getParameter("visatype");
-        Boolean isSchool = dService.checkIsSchool(formData);
-        HashMap<String, String> data = dService.prepareEntity(formData, visaType, isSchool);
-        //dService.replaceText(formData.getName()+formData);
+        Boolean isSchool = Boolean.parseBoolean(request.getParameter("isSchool"));
+        Boolean isWork = Boolean.parseBoolean(request.getParameter("isWork"));
+        HashMap<String, String> data = dService.prepareEntity(formData, visaType);
+        data = dService.fillSchoolWork(data,formData, visaType, isSchool, isWork);
+        dService.replaceText(data, visaType, login);
         return "service";
     }
 

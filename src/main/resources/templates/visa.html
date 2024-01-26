@@ -79,7 +79,7 @@
             <input type="text" id="homeaddress" placeholder="Адрес на родине ..."  th:field = "*{homeaddress}" required >
             <p id="homeaddresserr" class="error-message"></p>
             <label for="toggleSwitch">Заявитель посещает учебное заведение (детский сад или школу) </label>
-            <input type="checkbox" id="toggleSwitch" onchange="toggleInputs()">
+            <input type="checkbox" id="toggleSwitch" onchange="toggleInputs()" name="isSchool">
 
             <div id="inputContainer">
                 <input type="hidden" list="sstatus" />
@@ -101,7 +101,7 @@
                 </select>
             </div>
             <label for="toggleSwitchWork">Заявитель работает</label>
-            <input type="checkbox" id="toggleSwitchWork" onchange="toggleInputsWork()">
+            <input type="checkbox" id="toggleSwitchWork" onchange="toggleInputsWork()" name="isWork">
             <div id="inputContainerWork">
                 <input type="text"placeholder="Название текущего места работы ..."  th:field = "*{compname}" >
                 <input type="text"placeholder="Идентификационный номер текущего предприятия (саопча) ..."  th:field = "*{compno}" >
@@ -167,7 +167,7 @@
             <input type="text" id="homeaddress2" placeholder="Адрес на родине ..."  th:field = "*{homeaddress}" required >
             <p id="homeaddress2err" class="error-message"></p>
             <label for="toggleSwitch2">Заявитель посещает учебное заведение (детский сад или школу) </label>
-            <input type="checkbox" id="toggleSwitch2" onchange="toggleInputs2()">
+            <input type="checkbox" id="toggleSwitch2" onchange="toggleInputs2()" name="isSchool">
             <div id="inputContainer2">
                 <input type="hidden" list="sstatus2" />
                 <select id="sstatus2"  th:field = "*{schoolstatus}">
@@ -189,7 +189,7 @@
             </div>
 
             <label for="toggleSwitchWork2">Заявитель работает</label>
-            <input type="checkbox" id="toggleSwitchWork2" onchange="toggleInputsWork2()">
+            <input type="checkbox" id="toggleSwitchWork2" onchange="toggleInputsWork2()" name="isWork">
             <div id="inputContainerWork2">
                 <input type="text"placeholder="Название места работы ..."  th:field = "*{compname}" >
                 <input type="text"placeholder="Идентификационный номер предприятия (саопча) ..."  th:field = "*{compno}" >

@@ -24,18 +24,20 @@ public class VisaFillFormHashmap {
         hashMap.put("@6", "");
         hashMap.put("@7", "");
         hashMap.put("@8", "");
-        hashMap.put("@31", "");
-        hashMap.put("@32", "");
-        hashMap.put("@33", "");
-        hashMap.put("@34", "");
         hashMap.put("@35", "");
         hashMap.put("@36", "");
         hashMap.put("@37", "");
         hashMap.put("@38", "");
-        hashMap.put("@39", "");
-        hashMap.put("@40", "");
         hashMap.put("@41", "");
         hashMap.put("@42", "");
+        // school related
+        hashMap.put("@schoolname", "");
+        hashMap.put("@schooltel", "");
+        // work related
+        hashMap.put("@compname", "");
+        hashMap.put("@compno", "");
+        hashMap.put("@comptel", "");
+        hashMap.put("@position", "");
     }
 
     public HashMap<String, String> getHashMap() {
@@ -54,6 +56,12 @@ public class VisaFillFormHashmap {
             hashMap.put("@0", "");
             hashMap.put("@00", "");
             hashMap.put("@000", "");
+            // additional work related
+            hashMap.put("@compname*", "");
+            hashMap.put("@compno*", "");
+            hashMap.put("@comptel*", "");
+            hashMap.put("@salary", "");
+
         }
         LocalDate birthday = stringToDate(data.getBdate());
         // Get the current date
@@ -88,6 +96,7 @@ public class VisaFillFormHashmap {
         hashMap.put("@koraddress", data.getKoraddress());
         hashMap.put("@mobileno", data.getMobileno());
         hashMap.put("@homeaddress", data.getHomeaddress());
+        hashMap.put("@bankno", data.getBankno());
         hashMap.put("@data", formattedDateTime);
         return hashMap;
     }
