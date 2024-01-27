@@ -141,8 +141,15 @@ public class DocService {
 
     private void replaceTextInParagraph(XWPFParagraph paragraph, HashMap<String, String> data) {
         String paragraphText = paragraph.getParagraphText();
+        String updatedParagraphText = "";
         if (paragraphText.contains("@")) {
-            String updatedParagraphText = paragraphText.replace(paragraphText, data.get(paragraphText));
+            if(paragraphText.contains("@") && paragraphText.contains("[")){
+                String subParagraphText = getMark(paragraphText);
+                updatedParagraphText=paragraphText.replace(subParagraphText, data.get(subParagraphText));
+            }
+            else {
+                updatedParagraphText = paragraphText.replace(paragraphText, data.get(paragraphText));
+            }
             while (paragraph.getRuns().size() > 0) {
                 paragraph.removeRun(0);
             }
@@ -156,6 +163,15 @@ public class DocService {
         try (FileOutputStream out = new FileOutputStream(filePath)) {
             doc.write(out);
         }
+    }
+
+    // get @mark from paragraph:
+    private String getMark (String input){
+        // Find the index of '[' and ']'
+        int startIndex = input.indexOf('[');
+        int endIndex = input.indexOf(']');
+        String result = input.substring(startIndex + 1, endIndex).trim();
+        return result;
     }
 
 }

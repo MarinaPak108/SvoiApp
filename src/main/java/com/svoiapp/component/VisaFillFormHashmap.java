@@ -16,28 +16,28 @@ public class VisaFillFormHashmap {
     public void init() {
         // Initialize the HashMap with pre-filled values
         hashMap = new HashMap<>();
-        hashMap.put("@1", "");
-        hashMap.put("@2", "");
-        hashMap.put("@3", "");
-        hashMap.put("@4", "");
-        hashMap.put("@5", "");
-        hashMap.put("@6", "");
-        hashMap.put("@7", "");
-        hashMap.put("@8", "");
-        hashMap.put("@35", "");
-        hashMap.put("@36", "");
-        hashMap.put("@37", "");
-        hashMap.put("@38", "");
-        hashMap.put("@41", "");
-        hashMap.put("@42", "");
+        hashMap.put("@1", " ");
+        hashMap.put("@2", " ");
+        hashMap.put("@3", " ");
+        hashMap.put("@4", " ");
+        hashMap.put("@5", " ");
+        hashMap.put("@6", " ");
+        hashMap.put("@7", " ");
+        hashMap.put("@8", " ");
+        hashMap.put("@35", " ");
+        hashMap.put("@36", " ");
+        hashMap.put("@37", " ");
+        hashMap.put("@38", " ");
+        hashMap.put("@41", " ");
+        hashMap.put("@42", " ");
         // school related
-        hashMap.put("@schoolname", "");
-        hashMap.put("@schooltel", "");
+        hashMap.put("@schoolname", " ");
+        hashMap.put("@schooltel", " ");
         // work related
-        hashMap.put("@compname", "");
-        hashMap.put("@compno", "");
-        hashMap.put("@comptel", "");
-        hashMap.put("@position", "");
+        hashMap.put("@compname", " ");
+        hashMap.put("@compno", " ");
+        hashMap.put("@comptel", " ");
+        hashMap.put("@position", " ");
     }
 
     public HashMap<String, String> getHashMap() {
@@ -53,14 +53,14 @@ public class VisaFillFormHashmap {
 
     public HashMap<String, String> preFillHashMap (CreateVisaExtendFormData data, String visaType){
         if(visaType.equals("other")){
-            hashMap.put("@0", "");
-            hashMap.put("@00", "");
-            hashMap.put("@000", "");
+            hashMap.put("@0", " ");
+            hashMap.put("@00", " ");
+            hashMap.put("@000", " ");
             // additional work related
-            hashMap.put("@compname*", "");
-            hashMap.put("@compno*", "");
-            hashMap.put("@comptel*", "");
-            hashMap.put("@salary", "");
+            hashMap.put("@compname*", " ");
+            hashMap.put("@compno*", " ");
+            hashMap.put("@comptel*", " ");
+            hashMap.put("@salary", " ");
 
         }
         LocalDate birthday = stringToDate(data.getBdate());
