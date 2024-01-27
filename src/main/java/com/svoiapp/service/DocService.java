@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.svoiapp.component.SchoolTypeHashmap;
 import com.svoiapp.component.VisaFillFormHashmap;
@@ -143,12 +145,13 @@ public class DocService {
         String paragraphText = paragraph.getParagraphText();
         String updatedParagraphText = "";
         if (paragraphText.contains("@")) {
-            if(paragraphText.contains("@") && paragraphText.contains("[")){
-                String subParagraphText = getMark(paragraphText);
-                updatedParagraphText=paragraphText.replace(subParagraphText, data.get(subParagraphText));
+            if(paragraphText.contains("[")){
+                updatedParagraphText = updateParahraph (paragraphText, data);
+                System.out.println(updatedParagraphText);
             }
             else {
                 updatedParagraphText = paragraphText.replace(paragraphText, data.get(paragraphText));
+                System.out.println(updatedParagraphText);
             }
             while (paragraph.getRuns().size() > 0) {
                 paragraph.removeRun(0);
@@ -165,13 +168,15 @@ public class DocService {
         }
     }
 
-    // get @mark from paragraph:
-    private String getMark (String input){
-        // Find the index of '[' and ']'
-        int startIndex = input.indexOf('[');
-        int endIndex = input.indexOf(']');
-        String result = input.substring(startIndex + 1, endIndex).trim();
-        return result;
+    // update paragraph with [] mark
+    private String updateParahraph (String paragraph,HashMap<String, String> data ){
+        // Define the regex pattern to match the desired substrings
+        Pattern pattern = Pattern.compile("@\\d+");
+        Matcher matcher = pattern.matcher(paragraph);
+        while (matcher.find()) {
+            String subParagraphText = matcher.group();
+            paragraph = paragraph.replace(subParagraphText, data.get(subParagraphText));
+        }
+        return paragraph;
     }
-
 }
