@@ -20,6 +20,8 @@
     <h1>Форма для подачи (виза)</h1>
     <h2>Заполните форму</h2>
 
+    <div class = "center" style="color: red; font-size: 18px" th:if="${msg != null}" th:text = "${msg}"></div>
+
     <input type="radio" id="option1" name="options" onclick="showForm('form1')">
     <label for="option1">visa</label>
 

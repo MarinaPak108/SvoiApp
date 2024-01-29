@@ -1,38 +1,50 @@
 package com.svoiapp.service;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
-import com.svoiapp.component.SchoolTypeHashmap;
-import com.svoiapp.component.VisaFillFormHashmap;
-import com.svoiapp.component.VisaReasonHashmap;
-import com.svoiapp.formdata.CreateVisaExtendFormData;
+import com.svoiapp.component.DocumentNameHashmap;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
+
+import com.svoiapp.component.SchoolTypeHashmap;
+import com.svoiapp.component.VisaFillFormHashmap;
+import com.svoiapp.component.VisaReasonHashmap;
+import com.svoiapp.formdata.CreateVisaExtendFormData;
+
 
 @Service
 public class DocService {
     private final VisaReasonHashmap visaReasonHashmap;
     private final VisaFillFormHashmap visaFillFormHashmap;
     private final SchoolTypeHashmap schoolTypeHashmap;
+    private final DocumentNameHashmap documentNameHashmap;
 
     @Autowired
-    public DocService(VisaReasonHashmap visaReasonHashmap, VisaFillFormHashmap visaFillFormHashmap, SchoolTypeHashmap schoolTypeHashmap) {
+    public DocService(VisaReasonHashmap visaReasonHashmap, VisaFillFormHashmap visaFillFormHashmap, SchoolTypeHashmap schoolTypeHashmap, DocumentNameHashmap documentNameHashmap) {
         this.visaReasonHashmap = visaReasonHashmap;
         this.visaFillFormHashmap = visaFillFormHashmap;
         this.schoolTypeHashmap = schoolTypeHashmap;
+        this.documentNameHashmap = documentNameHashmap;
     }
 
     //prepare entity to fill visa
@@ -97,23 +109,19 @@ public class DocService {
         return data;
     }
 
-    public void replaceText(HashMap<String, String> data, String visaType, String login) throws IOException {
-        String docName = "";
-        if(visaType.equals("other")){
-            docName = "notVisaF4.docx";
-        }
-        else if (visaType.equals("f4")){
-            docName = "visaF4.docx";
-        }
-        String filePath = getClass().getClassLoader()
-                .getResource(docName)
-                .getPath();
+    public Boolean replaceText(HashMap<String, String> data, String visaType, String login) throws IOException {
+        HashMap<String, List<String>> docInfo = documentNameHashmap.getHashMap();
+        List<String> values = docInfo.get(visaType);
+        String docName = values.get(0);
+        String filePath = getClass().getClassLoader().getResource(docName).getPath();
+        String docFilePath = values.get(1);
         try (InputStream inputStream = new FileInputStream(filePath)) {
             XWPFDocument doc = new XWPFDocument(inputStream);
             doc = replaceText(doc, data);
             long timestampInMillis = System.currentTimeMillis();
-            saveFile(docName, filePath, doc, login+"_"+timestampInMillis);
+            Boolean result = saveFile(docFilePath+login+"/", doc, login+"_"+timestampInMillis);
             doc.close();
+            return result;
         }
     }
 
@@ -150,7 +158,7 @@ public class DocService {
                 System.out.println(updatedParagraphText);
             }
             else {
-                updatedParagraphText = paragraphText.replace(paragraphText, data.get(paragraphText));
+                updatedParagraphText = paragraphText.replace(paragraphText, checkAndGetValue(data, paragraphText));
                 System.out.println(updatedParagraphText);
             }
             while (paragraph.getRuns().size() > 0) {
@@ -161,10 +169,21 @@ public class DocService {
         }
     }
 
-    private void saveFile(String document, String filePath, XWPFDocument doc, String newName) throws IOException {
-        filePath = filePath.replace(document, newName+".docx");
-        try (FileOutputStream out = new FileOutputStream(filePath)) {
+    private Boolean saveFile(String folderPath, XWPFDocument doc, String newName) throws IOException {
+        Path directory = Paths.get(folderPath);
+        String file = folderPath+newName+".docx";
+
+        // Check if the folder exists
+        if (!Files.exists(directory)) {
+            // Create the directory
+            Files.createDirectory(directory);
+        }
+        try (FileOutputStream out = new FileOutputStream(file)) {
             doc.write(out);
+            return true;
+        }
+        catch (Exception e){
+            return false;
         }
     }
 
@@ -175,8 +194,47 @@ public class DocService {
         Matcher matcher = pattern.matcher(paragraph);
         while (matcher.find()) {
             String subParagraphText = matcher.group();
-            paragraph = paragraph.replace(subParagraphText, data.get(subParagraphText));
+            paragraph = paragraph.replace(subParagraphText, checkAndGetValue(data, subParagraphText));
         }
         return paragraph;
+    }
+
+    private String checkAndGetValue (HashMap<String, String> data, String mark){
+        if (data.get(mark).isEmpty() || data.get(mark).equals(null))
+            return "";
+        else
+            return data.get(mark);
+    }
+
+    public Resource loadFileAsResource(String filename, String fileDir) {
+        try {
+            Path filePath = Paths.get(fileDir).resolve(filename).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+            if (resource.exists()) {
+                return resource;
+            } else {
+                throw new RuntimeException("File not found: " + filename);
+            }
+        } catch (IOException ex) {
+            throw new RuntimeException("File not found: " + filename, ex);
+        }
+    }
+
+    public String getLatestFile (String fileDir){
+        // Create a File object representing the directory
+        File directory = new File(fileDir);
+
+        // List all files in the directory
+        File[] files = directory.listFiles();
+        if (files != null) {
+            // Filter files with .docx extension
+            List<File> docxFiles = Arrays.stream(files)
+                    .filter(file -> file.isFile() && file.getName().toLowerCase().endsWith(".docx"))
+                    .collect(Collectors.toList());
+
+            return docxFiles.get(files.length-1).getName();
+        } else {
+            return null;
+        }
     }
 }

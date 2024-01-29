@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SERVICE</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+<div class="topnav">
+    <a href="/m/home">Home</a>
+    <a class="active" href="/m/service">Service</a>
+    <a href="#about">About</a>
+    <a class="login-container" href="/w/login">Login</a>
+    <a class="login-container" href="/w/signin">Logout</a>
+    <a class="login-container" href="/w/logout">Logout</a>
+</div>
+<main>
+    <h1>Скачать документ</h1>
+    <h2>Нажмите кнопку "Скачать" чтобы загрузить документ</h2>
+    <!-- Download button -->
+    <form action="/m/download" method="get">
+        <button th:class="button" type="submit">Скачать</button>
+    </form>
+</main>
+</body>
+</html>
