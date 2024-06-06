@@ -212,6 +212,14 @@ div{
     color: white;
 }
 
+.topnav .login-disabled {
+    float: right;
+    pointer-events: none;
+    cursor: default;
+    background-color: #6a8ec8;
+    color: darkgrey;
+}
+
 .btn {
     background-color: #6a8ec8;
     border: none;
