@@ -2,6 +2,7 @@ package com.svoiapp.controller.web;
 
 import com.svoiapp.entity.DataEntity;
 import com.svoiapp.exception.CustomAuthHanlder;
+import com.svoiapp.formdata.CreatePinFromData;
 import com.svoiapp.formdata.CreateVisaExtendFormData;
 import org.springframework.http.ResponseEntity;
 import com.svoiapp.service.DocService;
@@ -51,9 +52,21 @@ public class MainController {
         else {
             DataEntity data = service.getData(login);
             model.addAttribute("user", "Hi "+ login + ", welcome to SVOI app");
-            if(data.getPin() != null)
+            if(data.getPin() != null && !data.getConfirmed())
+                model.addAttribute("formData", new CreatePinFromData());
                 model.addAttribute("msg", "Код для верификации был выслан на Ваш почтовый ящик. Также рекомендуем проверить папку 'СПАМ'.");
         }
+        return "home";
+    }
+
+    @PostMapping("/home")
+    public String postHome (@ModelAttribute("formData") CreatePinFromData formData){
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+        String[] loginEmail = authentication.getName().split("/__/");
+        String login = loginEmail[0];
+        String pin = formData.toOnePin();
+        service.checkPin(login, pin);
         return "home";
     }
 

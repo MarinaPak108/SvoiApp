@@ -1,9 +1,5 @@
 package com.svoiapp.formdata;
 
-import com.svoiapp.exception.StartsWith;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-
 import java.lang.reflect.Field;
 
 public class CreateVisaExtendFormData {

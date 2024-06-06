@@ -21,13 +21,14 @@
 
     <h2 th:if="${msg != null}" th:text = "${msg}"></h2>
     <div th:if="${msg != null}">
-        <form class="special-form">
-            <input type="text"  pattern="[0-9]{1}" maxlength="1" id="digit1" />
-            <input type="text"  pattern="[0-9]{1}" maxlength="1" id="digit2" />
-            <input type="text"  pattern="[0-9]{1}" maxlength="1" id="digit3" />
-            <input type="text"  pattern="[0-9]{1}" maxlength="1" id="digit4" />
-            <input type="text"  pattern="[0-9]{1}" maxlength="1" id="digit5" />
-            <input type="text"  pattern="[0-9]{1}" maxlength="1" id="digit6" />
+        <form class="special-form" th:object="${formData}" th:action="@{/m/home}"
+              method="post">
+            <input type="text"  pattern="[0-9]{1}" maxlength="1" th:field = "*{num1}" />
+            <input type="text"  pattern="[0-9]{1}" maxlength="1" th:field = "*{num2}" />
+            <input type="text"  pattern="[0-9]{1}" maxlength="1" th:field = "*{num3}" />
+            <input type="text"  pattern="[0-9]{1}" maxlength="1" th:field = "*{num4}" />
+            <input type="text"  pattern="[0-9]{1}" maxlength="1" th:field = "*{num5}" />
+            <input type="text"  pattern="[0-9]{1}" maxlength="1" th:field = "*{num6}" />
             <button th:class="button" type="submit" >validate</button>
         </form>
     </div>

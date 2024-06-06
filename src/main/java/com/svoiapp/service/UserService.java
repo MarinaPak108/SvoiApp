@@ -3,6 +3,7 @@ package com.svoiapp.service;
 import com.svoiapp.entity.AuthEntity;
 import com.svoiapp.entity.DataEntity;
 import com.svoiapp.formdata.CreateLoginFromData;
+import com.svoiapp.formdata.CreatePinFromData;
 import com.svoiapp.formdata.CreateUserFormData;
 import com.svoiapp.repo.AuthRepo;
 import com.svoiapp.repo.DataRepo;
@@ -92,5 +93,15 @@ public class UserService {
             logger.info(e.getMessage());
         }
         return null;
+    }
+
+    public Boolean checkPin(String userLogin, String pin){
+        DataEntity data = repo.findDataEntityByLogin(userLogin);
+        Boolean result = data.getPin().equals(pin);
+        if(result){
+            data.setConfirmed(true);
+            repo.save(data);
+        }
+        return result;
     }
 }

@@ -13,5 +13,4 @@ public interface DataRepo extends JpaRepository<DataEntity, Long> {
 
     DataEntity findDataEntityByLoginAndEmail (String login, String email);
 
-
 }
