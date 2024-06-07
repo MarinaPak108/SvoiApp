@@ -52,9 +52,10 @@ public class MainController {
         else {
             DataEntity data = service.getData(login);
             model.addAttribute("user", "Hi "+ login + ", welcome to SVOI app");
-            if(data.getPin() != null && !data.getConfirmed())
+            if(data.getPin() != null && data.getConfirmed()==false){
                 model.addAttribute("formData", new CreatePinFromData());
                 model.addAttribute("msg", "Код для верификации был выслан на Ваш почтовый ящик. Также рекомендуем проверить папку 'СПАМ'.");
+            }
         }
         return "home";
     }

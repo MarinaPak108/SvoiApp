@@ -95,6 +95,11 @@ public class AuthWebController {
         }
         return "login";}
 
+    @GetMapping("/loginFailed")
+    public String failedLogin(final Model model) {
+        model.addAttribute("error", "wrong login or password");
+        return "loginFailed";}
+
 
 
 }

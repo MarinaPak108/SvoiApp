@@ -36,6 +36,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
         data.put(
                 "exception", exception.getMessage());
         logger.info("login failed. details: "+ data);
-        response.sendRedirect("/w/login?loginError=true");
+        //response.sendRedirect("/w/login?loginError=true");
+        response.sendRedirect("/w/loginFailed");
     }
 }

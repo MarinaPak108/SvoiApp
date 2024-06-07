@@ -11,9 +11,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -63,7 +65,7 @@ public class UserSecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/m/visaExt")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/?continue")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/w/access-failed")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/w/login?loginError=true")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/w/loginFailed")).permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form)->form
@@ -77,6 +79,16 @@ public class UserSecurityConfig {
                         .permitAll())
                 .exceptionHandling()
                 .accessDeniedHandler(accessDeniedHandler());
+        return http.build();
+    }
+
+    @Bean
+    DefaultSecurityFilterChain springSecurity(HttpSecurity http) throws Exception {
+        http
+                // ...
+                .sessionManagement((sessions) -> sessions
+                        .requireExplicitAuthenticationStrategy(false)
+                );
         return http.build();
     }
 }

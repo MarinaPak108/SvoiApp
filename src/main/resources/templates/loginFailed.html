@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div class="topnav">
+    <a href="/m/home">Home</a>
+    <a class="disabled" href="/m/service">Service</a>
+    <a href="#about">About</a>
+    <a class="login-active" href="/w/signin">Signin</a>
+    <a class="login-active" href="/w/login">Login</a>
+    <a class="login-disabled" href="/w/logout">Logout</a>
+</div>
+
+<main>
+    <div class = "center" style="color: red; font-size: 18px" th:if="${error != null}" th:text = "${error}"></div>
+</main>
+</body>
+</html>
