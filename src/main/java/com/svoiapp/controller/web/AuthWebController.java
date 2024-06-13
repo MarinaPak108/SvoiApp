@@ -7,6 +7,7 @@ import com.svoiapp.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.boon.Str;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -65,23 +66,30 @@ public class AuthWebController {
     }
 
     @GetMapping("/access-denied")
-    public String accessDenied (Model model){
-        Authentication authentication =
-                SecurityContextHolder.getContext().getAuthentication();
-        String[] loginEmail = authentication.getName().split("/__/");
-        String login = loginEmail[0];
-        String email = loginEmail[1];
-        boolean isEmailConfirmed = service.isEmailAuthorised(login, email);
-        String role = authentication.getAuthorities().iterator().next().getAuthority();
-        if(!isEmailConfirmed && role.equals("ROLE_USER")){
-            model.addAttribute("msg", "please confirm your email");
+    public String accessDenied (Model model, @RequestParam(name = "msg", required = false) int msg){
+        if(msg == 1){
+            model.addAttribute("msg", "Пожалуйста зарегестрируйтесь/залогиньтесь, чтобы воспользоваться услугой.");
+        }
+        else{
+            Authentication authentication =
+                    SecurityContextHolder.getContext().getAuthentication();
+            String[] loginEmail = authentication.getName().split("/__/");
+            String login = loginEmail[0];
+            String email = loginEmail[1];
+            boolean isEmailConfirmed = service.isEmailAuthorised(login, email);
+            String role = authentication.getAuthorities().iterator().next().getAuthority();
 
+            if(!isEmailConfirmed && role.equals("ROLE_USER")){
+                model.addAttribute("msg", "please confirm your email");
+
+            }
+            else if (role.equals("ROLE_GUEST")){
+                model.addAttribute("msg", "please sign in and confirm email to use our services");
+            }
+            else
+                return "home";
         }
-        else if (role.equals("ROLE_GUEST")){
-            model.addAttribute("msg", "please sign in and confirm email to use our services");
-        }
-        else
-            return "home";
+
         return "home";
     }
 

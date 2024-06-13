@@ -16,6 +16,7 @@
     <a class="login-disabled" href="/w/logout">Logout</a>
 </div>
 <main>
+    <h2 th:if="${msg != null}" th:text = "${msg}"></h2>
     <form th:object="${formData}"
     th:action="@{/w/signin}"
     method="post">

@@ -2,6 +2,8 @@ package com.svoiapp.config;
 
 import com.svoiapp.exception.CustomAccessDeniedHandler;
 import com.svoiapp.exception.CustomAuthenticationFailureHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -11,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -42,6 +45,10 @@ public class UserSecurityConfig {
         return new CustomAuthenticationFailureHandler();
     }
 
+    @Autowired
+    @Qualifier("delegatedAuthenticationEntryPoint")
+    AuthenticationEntryPoint authEntryPoint;
+
 
     @Bean
     public AuthenticationProvider authenticationProvider (){
@@ -60,11 +67,11 @@ public class UserSecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/images/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/m/service")).hasAnyRole("MEMBER", "USER")
-                        .requestMatchers(new AntPathRequestMatcher("/m/home")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/m/home**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/w/signin")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/m/visaExt")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/w/access-failed")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/w/access-denied*")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/w/loginFailed")).permitAll()
                         .anyRequest().authenticated()
                 )
@@ -76,11 +83,9 @@ public class UserSecurityConfig {
                 .logout((logout) -> logout
                         .logoutSuccessUrl("/w/logout")
                         .permitAll())
-                .exceptionHandling(c ->
-                        // основная точка входа
-                        c.authenticationEntryPoint(
-                                        new LoginUrlAuthenticationEntryPoint("/w/login"))
-                .accessDeniedHandler(accessDeniedHandler()));
+                .exceptionHandling()
+                .authenticationEntryPoint(authEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler());
         return http.build();
     }
 

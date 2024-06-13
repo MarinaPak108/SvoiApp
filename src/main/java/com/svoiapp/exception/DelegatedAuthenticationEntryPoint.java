@@ -6,33 +6,37 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.error.ErrorController;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
+
 
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
+@Component("delegatedAuthenticationEntryPoint")
+public class DelegatedAuthenticationEntryPoint implements AuthenticationEntryPoint {
     private static Logger logger = LoggerFactory.getLogger(ErrorController.class);
     @Override
-    public void onAuthenticationFailure(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            AuthenticationException exception)
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
             throws IOException, ServletException {
 
-        //response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+
         Map<String, Object> data = new HashMap<>();
         data.put(
                 "timestamp", Calendar.getInstance().getTime());
         data.put(
-                "exception", exception.getMessage());
+                "exception", authException.getMessage());
         logger.info("login failed. details: "+ data);
-        //response.sendRedirect("/w/login?loginError=true");
-        response.sendRedirect("/w/loginFailed");
+        String classs = String.valueOf(authException.getClass());
+        if(classs.contains("InsufficientAuthenticationException")){
+            response.sendRedirect("/w/access-denied?msg=1");
+        }
+        else{
+            response.sendRedirect("/m/home");
+        }
+
     }
 }
