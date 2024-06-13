@@ -87,7 +87,6 @@ public class AuthWebController {
 
     @GetMapping("/login")
     public String showLogin(@RequestParam(name = "loginError", required = false) final Boolean loginError,
-                            @RequestParam(name = "loginDetails", required = false) final Boolean loginDetails,
                             final Model model) {
         model.addAttribute("formData", new CreateLoginFromData());
         if (loginError == Boolean.TRUE) {

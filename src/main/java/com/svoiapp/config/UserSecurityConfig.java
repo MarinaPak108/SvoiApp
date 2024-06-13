@@ -15,6 +15,7 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -63,7 +64,6 @@ public class UserSecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/w/signin")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/m/visaExt")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/?continue")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/w/access-failed")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/w/loginFailed")).permitAll()
                         .anyRequest().authenticated()
@@ -71,16 +71,19 @@ public class UserSecurityConfig {
                 .formLogin((form)->form
                         .loginProcessingUrl("/w/login")
                         .defaultSuccessUrl("/m/home")
-                        //.failureUrl("/w/login?loginError=true")
                         .failureHandler(authenticationFailureHandler())
                         .permitAll())
                 .logout((logout) -> logout
                         .logoutSuccessUrl("/w/logout")
                         .permitAll())
-                .exceptionHandling()
-                .accessDeniedHandler(accessDeniedHandler());
+                .exceptionHandling(c ->
+                        // основная точка входа
+                        c.authenticationEntryPoint(
+                                        new LoginUrlAuthenticationEntryPoint("/w/login"))
+                .accessDeniedHandler(accessDeniedHandler()));
         return http.build();
     }
+
 
     @Bean
     DefaultSecurityFilterChain springSecurity(HttpSecurity http) throws Exception {
