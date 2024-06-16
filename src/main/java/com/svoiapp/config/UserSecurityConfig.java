@@ -70,7 +70,7 @@ public class UserSecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/m/home**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/w/signin")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/m/visaExt")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/m/visaExt")).hasAnyRole("MEMBER", "USER")
                         .requestMatchers(new AntPathRequestMatcher("/w/access-denied*")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/w/loginFailed")).permitAll()
                         .anyRequest().authenticated()
@@ -83,9 +83,11 @@ public class UserSecurityConfig {
                 .logout((logout) -> logout
                         .logoutSuccessUrl("/w/logout")
                         .permitAll())
-                .exceptionHandling()
-                .authenticationEntryPoint(authEntryPoint)
-                .accessDeniedHandler(accessDeniedHandler());
+                .exceptionHandling(c ->
+                        // основная точка входа
+                        c.authenticationEntryPoint(
+                                        new LoginUrlAuthenticationEntryPoint("/w/login"))
+                .accessDeniedHandler(accessDeniedHandler()));
         return http.build();
     }
 

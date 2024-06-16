@@ -1,5 +1,6 @@
 package com.svoiapp.exception;
 
+import com.svoiapp.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CustomAccessDeniedHandler implements AccessDeniedHandler{
-    private static Logger logger = LoggerFactory.getLogger(ErrorController.class);
+    private static Logger logger = LoggerFactory.getLogger(CustomAccessDeniedHandler.class.getName());
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {

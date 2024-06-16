@@ -50,6 +50,7 @@ public class DocService {
     //prepare entity to fill visa
     public HashMap<String, String> prepareEntity (CreateVisaExtendFormData data, String visaType){
         data.convertNullFieldsToString(data);
+        visaFillFormHashmap.refreshHashMap();
         HashMap<String, String> newHashmap = visaFillFormHashmap.preFillHashMap(data, visaType);
         newHashmap = fillGenderVisa(newHashmap, data.getSex());
         newHashmap = fillVisaReason(newHashmap, data.getReason());

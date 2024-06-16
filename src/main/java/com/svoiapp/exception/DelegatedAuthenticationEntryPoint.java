@@ -1,5 +1,6 @@
 package com.svoiapp.exception;
 
+import com.svoiapp.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,7 +19,7 @@ import java.util.Map;
 
 @Component("delegatedAuthenticationEntryPoint")
 public class DelegatedAuthenticationEntryPoint implements AuthenticationEntryPoint {
-    private static Logger logger = LoggerFactory.getLogger(ErrorController.class);
+    private static Logger logger = LoggerFactory.getLogger(DelegatedAuthenticationEntryPoint.class.getName());
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
             throws IOException, ServletException {
@@ -29,12 +30,14 @@ public class DelegatedAuthenticationEntryPoint implements AuthenticationEntryPoi
                 "timestamp", Calendar.getInstance().getTime());
         data.put(
                 "exception", authException.getMessage());
-        logger.info("login failed. details: "+ data);
+
         String classs = String.valueOf(authException.getClass());
         if(classs.contains("InsufficientAuthenticationException")){
+            logger.warn ("login failed. details: "+ data);
             response.sendRedirect("/w/access-denied?msg=1");
         }
         else{
+            logger.info("details: "+ data);
             response.sendRedirect("/m/home");
         }
 

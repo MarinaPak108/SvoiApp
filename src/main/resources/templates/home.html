@@ -18,8 +18,10 @@
 <main>
     <h1> HOME Page</h1>
     <div class = "center" style="color: darkblue; font-size: 18px" th:if="${user != null}" th:text = "${user}"></div>
+    <div style="color: #7d9ccf" th:if="${msg != null}" >
+        <h3 th:text = "${msg}"></h3>
+    </div>
 
-    <h2 th:if="${msg != null}" th:text = "${msg}"></h2>
     <div th:if="${formData != null}">
         <form  class="special-form" th:object="${formData}" th:action="@{/m/home}"
               method="post">

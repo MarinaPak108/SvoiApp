@@ -23,4 +23,6 @@ public class SchoolTypeHashmap {
     public HashMap<String, String> getHashMap() {
         return hashMap;
     }
+
+
 }

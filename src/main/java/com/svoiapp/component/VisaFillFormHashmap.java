@@ -11,6 +11,7 @@ import java.util.HashMap;
 @Component
 public class VisaFillFormHashmap {
     private HashMap<String, String> hashMap;
+    private Boolean isOther;
 
     @PostConstruct
     public void init() {
@@ -40,6 +41,15 @@ public class VisaFillFormHashmap {
         hashMap.put("@position", " ");
     }
 
+    public HashMap<String, String> refreshHashMap(){
+        for (String key : hashMap.keySet()) {
+            if(hashMap.get(key)!=" "){
+                hashMap.replace(key, " ");
+            }
+        }
+        return hashMap;
+    }
+
     public HashMap<String, String> getHashMap() {
         return hashMap;
     }
@@ -52,7 +62,7 @@ public class VisaFillFormHashmap {
     }
 
     public HashMap<String, String> preFillHashMap (CreateVisaExtendFormData data, String visaType){
-        if(visaType.equals("other")){
+        if(visaType.equals("other") && !hashMap.containsKey("@0")){
             hashMap.put("@0", " ");
             hashMap.put("@00", " ");
             hashMap.put("@000", " ");
@@ -61,7 +71,6 @@ public class VisaFillFormHashmap {
             hashMap.put("@compno*", " ");
             hashMap.put("@comptel*", " ");
             hashMap.put("@salary", " ");
-
         }
         LocalDate birthday = stringToDate(data.getBdate());
         // Get the current date

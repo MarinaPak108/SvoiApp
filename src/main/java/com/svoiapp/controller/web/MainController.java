@@ -50,6 +50,7 @@ public class MainController {
             String login = loginEmail[0];
             if(login.equals("anonymousUser")){
                 model.addAttribute("user", "Welcome to SVOI app");
+                model.addAttribute("msg", "Предлагаем Вам зарегестрироваться чтобы воспользоваться услугой");
 
             }
             else {
@@ -77,7 +78,7 @@ public class MainController {
             String login = loginEmail[0];
             String pin = formData.toOnePin();
             service.checkPin(login, pin);
-            return "home";
+            return "redirect:/m/home";
         }
         catch (Exception e){
             String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -165,7 +166,7 @@ public class MainController {
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                     .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                    .body(resource);//
+                    .body(resource);
         }catch (Exception e) {
             String methodName = new Object() {
             }.getClass().getEnclosingMethod().getName();

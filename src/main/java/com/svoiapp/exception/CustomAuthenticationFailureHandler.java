@@ -1,5 +1,6 @@
 package com.svoiapp.exception;
 
+import com.svoiapp.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
-    private static Logger logger = LoggerFactory.getLogger(ErrorController.class);
+    private static Logger logger = LoggerFactory.getLogger(CustomAuthenticationFailureHandler.class.getName());
     @Override
     public void onAuthenticationFailure(
             HttpServletRequest request,

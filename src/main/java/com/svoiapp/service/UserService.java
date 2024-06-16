@@ -94,13 +94,14 @@ public class UserService {
         return null;
     }
 
-    public Boolean checkPin(String userLogin, String pin){
+    public void checkPin(String userLogin, String pin){
         DataEntity data = repo.findDataEntityByLogin(userLogin);
+        AuthEntity auth = authRepo.findAuthEntityByName("ROLE_USER");
         Boolean result = data.getPin().equals(pin);
         if(result){
             data.setConfirmed(true);
+            data.setAuth(auth);
             repo.save(data);
         }
-        return result;
     }
 }

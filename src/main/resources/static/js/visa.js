@@ -102,6 +102,7 @@ function submitForm(formId) {
         ){
             //document.getElementById('visatype2').value = /*[[${'f4'}]]*/ '';
             document.getElementById(formId).submit();
+
         }
         else {
             alert("Некоторые поля заполнены неверно. Проверьте сообщения, выделенные красным.")

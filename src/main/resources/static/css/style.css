@@ -16,6 +16,12 @@ h1 {
     color: #34568b;
 }
 
+h3{
+    color: #34568b;
+    text-align: center;
+    font-size: 16px;
+}
+
 .center {
     border: 5px solid;
     margin: auto;
