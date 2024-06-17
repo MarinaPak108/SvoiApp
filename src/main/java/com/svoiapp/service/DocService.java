@@ -35,14 +35,12 @@ import com.svoiapp.formdata.CreateVisaExtendFormData;
 @Service
 public class DocService {
     private final VisaReasonHashmap visaReasonHashmap;
-    private final VisaFillFormHashmap visaFillFormHashmap;
     private final SchoolTypeHashmap schoolTypeHashmap;
     private final DocumentNameHashmap documentNameHashmap;
 
     @Autowired
-    public DocService(VisaReasonHashmap visaReasonHashmap, VisaFillFormHashmap visaFillFormHashmap, SchoolTypeHashmap schoolTypeHashmap, DocumentNameHashmap documentNameHashmap) {
+    public DocService(VisaReasonHashmap visaReasonHashmap, SchoolTypeHashmap schoolTypeHashmap, DocumentNameHashmap documentNameHashmap) {
         this.visaReasonHashmap = visaReasonHashmap;
-        this.visaFillFormHashmap = visaFillFormHashmap;
         this.schoolTypeHashmap = schoolTypeHashmap;
         this.documentNameHashmap = documentNameHashmap;
     }
@@ -50,8 +48,9 @@ public class DocService {
     //prepare entity to fill visa
     public HashMap<String, String> prepareEntity (CreateVisaExtendFormData data, String visaType){
         data.convertNullFieldsToString(data);
-        visaFillFormHashmap.refreshHashMap();
-        HashMap<String, String> newHashmap = visaFillFormHashmap.preFillHashMap(data, visaType);
+        VisaFillFormHashmap visaFillFormHashmap = new VisaFillFormHashmap();
+        HashMap<String, String> hashMap = visaFillFormHashmap.createFormHashMap();
+        HashMap<String, String> newHashmap = visaFillFormHashmap.preFillHashMap(data, visaType, hashMap);
         newHashmap = fillGenderVisa(newHashmap, data.getSex());
         newHashmap = fillVisaReason(newHashmap, data.getReason());
         return newHashmap;

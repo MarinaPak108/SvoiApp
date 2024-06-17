@@ -1,7 +1,6 @@
 package com.svoiapp.component;
 
 import com.svoiapp.formdata.CreateVisaExtendFormData;
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -10,13 +9,10 @@ import java.util.HashMap;
 
 @Component
 public class VisaFillFormHashmap {
-    private HashMap<String, String> hashMap;
-    private Boolean isOther;
 
-    @PostConstruct
-    public void init() {
+    public HashMap<String, String> createFormHashMap(){
         // Initialize the HashMap with pre-filled values
-        hashMap = new HashMap<>();
+       HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("@1", " ");
         hashMap.put("@2", " ");
         hashMap.put("@3", " ");
@@ -39,20 +35,9 @@ public class VisaFillFormHashmap {
         hashMap.put("@compno", " ");
         hashMap.put("@comptel", " ");
         hashMap.put("@position", " ");
-    }
-
-    public HashMap<String, String> refreshHashMap(){
-        for (String key : hashMap.keySet()) {
-            if(hashMap.get(key)!=" "){
-                hashMap.replace(key, " ");
-            }
-        }
         return hashMap;
-    }
+ }
 
-    public HashMap<String, String> getHashMap() {
-        return hashMap;
-    }
     //transfer Styring to LocalDate format
     private LocalDate stringToDate (String dateString){
         // Parse the string into a LocalDate object using a formatter
@@ -61,8 +46,8 @@ public class VisaFillFormHashmap {
         return date;
     }
 
-    public HashMap<String, String> preFillHashMap (CreateVisaExtendFormData data, String visaType){
-        if(visaType.equals("other") && !hashMap.containsKey("@0")){
+    public HashMap<String, String> preFillHashMap (CreateVisaExtendFormData data, String visaType,  HashMap<String, String> hashMap){
+        if(visaType.equals("other")){
             hashMap.put("@0", " ");
             hashMap.put("@00", " ");
             hashMap.put("@000", " ");
