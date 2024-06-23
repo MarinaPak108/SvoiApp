@@ -236,6 +236,23 @@ function toggleInputs2() {
     }
 }
 
+function updateFields(formId){
+    if(formId === 'form1')
+    var visa = document.getElementById('visa').value;
+    if(visa === "впервые" || visa === "перевыпуск"){
+        document.getElementById('bank').type = "text";
+        document.getElementById('idNumber').type = "text";
+    }
+    else if(visa === "работа"){
+        document.getElementById('"nWorkPlace"').type = "text";
+        document.getElementById('nWorkId').type = "text";
+        document.getElementById('nWorkNum').type = "text";
+    }
+    else if (visa === "адрес"){
+
+    }
+}
+
 function toggleInputsWork() {
     var inputContainerWork = document.getElementById("inputContainerWork");
     var toggleSwitchWork = document.getElementById("toggleSwitchWork");

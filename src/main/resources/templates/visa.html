@@ -35,7 +35,7 @@
         <div>
             <input type="hidden" name="visatype" value = "other" />
             <input type="hidden" list="visa" />
-            <select id="visa" name="visas" th:field = "*{reason}">
+            <select id="visa" name="visas" th:field = "*{reason}" onclick="updateFields('form1')">
                 <option th:value = "0"> Цель подачи </option>
                 <option th:value = "впервые"> впервые выпуск </option>
                 <option th:value = "перевыпуск"> перевыпуск </option>
@@ -64,7 +64,7 @@
             <p id="sexerr" class="error-message"></p>
             <input id="nationality" type="text"placeholder="Гражданство ..."  th:field = "*{nationality}" required >
             <p id="nationalityerr" class="error-message"></p>
-            <input id="idNumber" type="text"placeholder="Номер ай ди кады..."  th:field = "*{idNumber}" required >
+            <input id="idNumber" type="hidden" placeholder="Номер ай ди кады..."  th:field = "*{idNumber}" required >
             <p id="idNumbererr" class="error-message"></p>
             <input id="passno" type="text"placeholder="Номер паспорта ..."  th:field = "*{passno}" required >
             <p id="passnoerr" class="error-message"></p>
@@ -110,11 +110,11 @@
                 <input type="text"placeholder="Номер телефона текущего предприятия ..."  th:field = "*{comptel}" >
                 <input type="text"placeholder="Годовая заработная плата ..."  th:field = "*{salary}">
                 <input type="text"placeholder="Занимаемая должность ..."  th:field = "*{position}">
-                <input type="text"placeholder="Название НОВОГО места работы (ТОЛЬКО в случае смены места работы) ..."  th:field = "*{compnameNew}">
-                <input type="text"placeholder="Идентификационный номер НОВОГО предприятия (ТОЛЬКО в случае смены места работы) ..."  th:field = "*{compnoNew}">
-                <input type="text"placeholder="Номер телефона НОВОГО предприятия (ТОЛЬКО в случае смены места работы) ..."  th:field = "*{comptelNew}">
+                <input type="hidden" id = "nWorkPlace" placeholder="Название НОВОГО места работы (ТОЛЬКО в случае смены места работы) ..."  th:field = "*{compnameNew}">
+                <input type="hidden" id="nWorkId" placeholder="Идентификационный номер НОВОГО предприятия (ТОЛЬКО в случае смены места работы) ..."  th:field = "*{compnoNew}">
+                <input type="hidden"id="nWorkNum" placeholder="Номер телефона НОВОГО предприятия (ТОЛЬКО в случае смены места работы) ..."  th:field = "*{comptelNew}">
             </div>
-            <input type="text"placeholder="Номер счета в банке (Только в случае выпуска впервые ай ди кады или перевыпуска) ..."  th:field = "*{bankno}">
+            <input type="hidden" id = "bank" placeholder="Номер счета в банке (Только в случае выпуска впервые ай ди кады или перевыпуска) ..."  th:field = "*{bankno}">
         </div>
         <button th:class="button" type="button"  onclick="submitForm('form1')">Заполнить заявку</button>
     </form>
