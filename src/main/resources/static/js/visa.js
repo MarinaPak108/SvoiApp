@@ -66,24 +66,25 @@ function submitForm(formId) {
 
         //validation
         //dropdown not null
-        if(isDropDownNotNull(visa2, visa2err)){
-        }
+        isDropDownNotNull(visa2, visa2err)
         //validation not null
-        if(isNotNull(surname2, surname2err, "Фамилия")){}
-        if(isNotNull(name2, name2err, "Имя")){}
+        isNotNull(surname2, surname2err, "Фамилия")
+        isNotNull(name2, name2err, "Имя")
         //check date
-        if(isDataNotNull(calendar2, calendar2err, "Дата рождения")) {}
+        isDataNotNull(calendar2, calendar2err, "Дата рождения")
         //dropdown
         if(isDropDownNotNull(sex2,sex2err)){}
-        if(isNotNull(nationality2, nationality2err, "Гражданство")){}
+        isNotNull(nationality2, nationality2err, "Гражданство")
         // should be digits and exactly 13
-        if(isDigitsCharsLong(idNumber2, idNumber2err, "13")){}
-        if(isNotNull(passno2, passno2err, "Номер паспорта")){}
-        if(isDataNotNull(passdate2, passdate2err, "Дата выдачи паспорта")){}
-        if(isDataNotNull(passexp2,passexp2err, "Срок годности паспорта")){}
-        if(isNotNull(koraddress2,koraddress2err, "Адрес проживания в Корее.")){}
-        if(isDigitsCharsLong(telno2, telno2err, "11")|| isMobile(telno2, telno2err)){}
-        if(isNotNull(homeaddress2, homeaddress2err, "Адрес проживания на родине.")){}
+        if(visa2 !=="впервые"){
+            isDigitsCharsLong(idNumber2, idNumber2err, "13")
+        }
+        isNotNull(passno2, passno2err, "Номер паспорта")
+        isDataNotNull(passdate2, passdate2err, "Дата выдачи паспорта")
+        isDataNotNull(passexp2,passexp2err, "Срок годности паспорта")
+        isNotNull(koraddress2,koraddress2err, "Адрес проживания в Корее.")
+        isDigitsCharsLong(telno2, telno2err, "11")|| isMobile(telno2, telno2err)
+        isNotNull(homeaddress2, homeaddress2err, "Адрес проживания на родине.")
 
         //if all is filled submit
         if(visa2!=="0"&&
@@ -167,21 +168,21 @@ function submitForm(formId) {
         if(isDropDownNotNull(visa, visaerr)){
         }
         //validation not null
-        if(isNotNull(surname, surnameerr, "Фамилия")){}
-        if(isNotNull(name, nameerr, "Имя")){}
+        isNotNull(surname, surnameerr, "Фамилия")
+        isNotNull(name, nameerr, "Имя")
         //check date
-        if(isDataNotNull(calendar, calendarerr, "Дата рождения")) {}
+        isDataNotNull(calendar, calendarerr, "Дата рождения")
         //dropdown
-        if(isDropDownNotNull(sex,sexerr)){}
-        if(isNotNull(nationality, nationalityerr, "Гражданство")){}
+        isDropDownNotNull(sex,sexerr)
+        isNotNull(nationality, nationalityerr, "Гражданство")
         // should be digits and exactly 13
-        if(isDigitsCharsLong(idNumber, idNumbererr, "13")){}
-        if(isNotNull(passno, passnoerr, "Номер паспорта")){}
-        if(isDataNotNull(passdate, passdateerr, "Дата выдачи паспорта")){}
-        if(isDataNotNull(passexp,passexperr, "Срок годности паспорта")){}
-        if(isNotNull(koraddress,koraddresserr, "Адрес проживания в Корее.")){}
-        if(isDigitsCharsLong(telno, telnoerr, "11")|| isMobile(telno, telnoerr)){}
-        if(isNotNull(homeaddress, homeaddresserr, "Адрес проживания на родине.")){}
+        if(visa!=="впервые"){isDigitsCharsLong(idNumber, idNumbererr, "13")}
+        isNotNull(passno, passnoerr, "Номер паспорта")
+        isDataNotNull(passdate, passdateerr, "Дата выдачи паспорта")
+        isDataNotNull(passexp,passexperr, "Срок годности паспорта")
+        isNotNull(koraddress,koraddresserr, "Адрес проживания в Корее.")
+        isDigitsCharsLong(telno, telnoerr, "11")|| isMobile(telno, telnoerr)
+        isNotNull(homeaddress, homeaddresserr, "Адрес проживания на родине.")
 
         //if all is filled submit
         if(visa!=="0"&&
@@ -243,28 +244,18 @@ function updateFields(formId){
         document.getElementById("inputContainerWork").style.display = "none";
         document.getElementById("toggleSwitchWork").checked = false;
         if(visa === "впервые" ){
-            document.getElementById('bank').type = "text";
             document.getElementById('idNumber').type = "hidden";
-        } else if(visa === "перевыпуск"){
-            document.getElementById('bank').type = "text";
-            document.getElementById('idNumber').type = "text";
         }
         else{
-            document.getElementById('bank').type = "hidden";
             document.getElementById('idNumber').type = "text";
         }
     }
     else if(formId === 'form2'){
         var visa = document.getElementById('visa2').value;
         if(visa === "впервые"){
-            document.getElementById('bank2').type = "text";
             document.getElementById('idNumber2').type = "hidden";
-        } else if(visa === "перевыпуск"){
-            document.getElementById('bank2').type = "text";
-            document.getElementById('idNumber2').type = "text";
         }
         else{
-            document.getElementById('bank2').type = "hidden";
             document.getElementById('idNumber2').type = "text";
         }
     }

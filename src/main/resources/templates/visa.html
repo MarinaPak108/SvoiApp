@@ -114,7 +114,6 @@
                 <input type="hidden" id="nWorkId" placeholder="Идентификационный номер НОВОГО предприятия (ТОЛЬКО в случае смены места работы) ..."  th:field = "*{compnoNew}">
                 <input type="hidden"id="nWorkNum" placeholder="Номер телефона НОВОГО предприятия (ТОЛЬКО в случае смены места работы) ..."  th:field = "*{comptelNew}">
             </div>
-            <input type="hidden" id = "bank" placeholder="Номер счета в банке (Только в случае выпуска впервые ай ди кады или перевыпуска) ..."  th:field = "*{bankno}">
         </div>
         <button th:class="button" type="button"  onclick="submitForm('form1')">Заполнить заявку</button>
     </form>
@@ -198,7 +197,6 @@
                 <input type="text"placeholder="Номер телефона предприятия ..."  th:field = "*{comptel}" >
                 <input type="text"placeholder="Занимаемая должность ..."  th:field = "*{position}">
             </div>
-            <input type="hidden" id = "bank2" placeholder="Номер счета в банке (Только в случае выпуска впервые ай ди кады или перевыпуска) ..."  th:field = "*{bankno}">
         </div>
         <button th:class="button" type="button"  onclick="submitForm('form2')">Заполнить заявку</button>
     </form>
