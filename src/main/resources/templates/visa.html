@@ -64,7 +64,7 @@
             <p id="sexerr" class="error-message"></p>
             <input id="nationality" type="text"placeholder="Гражданство ..."  th:field = "*{nationality}" required >
             <p id="nationalityerr" class="error-message"></p>
-            <input id="idNumber" type="hidden" placeholder="Номер ай ди кады..."  th:field = "*{idNumber}" required >
+            <input id="idNumber" type="text" placeholder="Номер ай ди кады..."  th:field = "*{idNumber}" required >
             <p id="idNumbererr" class="error-message"></p>
             <input id="passno" type="text"placeholder="Номер паспорта ..."  th:field = "*{passno}" required >
             <p id="passnoerr" class="error-message"></p>
@@ -126,7 +126,7 @@
         <div>
             <input type="hidden" name="visatype" value = "f4" />
             <input type="hidden" list="visa2" />
-            <select id="visa2" name="visas" th:field = "*{reason}">
+            <select id="visa2" name="visas" th:field = "*{reason}" onclick="updateFields('form2')">
                 <option th:value = "0"> Цель подачи </option>
                 <option th:value = "впервые"> впервые выпуск </option>
                 <option th:value = "адрес"> смена адреса места жительства </option>
@@ -152,7 +152,7 @@
             <p id="sex2err" class="error-message"></p>
             <input id="nationality2" type="text"placeholder="Гражданство ..."  th:field = "*{nationality}" required >
             <p id="nationality2err" class="error-message"></p>
-            <input id="idNumber2" type="text"placeholder="Номер ай ди кады..."  th:field = "*{idNumber}" required >
+            <input id="idNumber2" type="text" placeholder="Номер ай ди кады..."  th:field = "*{idNumber}" required >
             <p id="idNumber2err" class="error-message"></p>
             <input id="passno2" type="text"placeholder="Номер паспорта ..."  th:field = "*{passno}" required >
             <p id="passno2err" class="error-message"></p>
@@ -198,7 +198,7 @@
                 <input type="text"placeholder="Номер телефона предприятия ..."  th:field = "*{comptel}" >
                 <input type="text"placeholder="Занимаемая должность ..."  th:field = "*{position}">
             </div>
-            <input type="text"placeholder="Номер счета в банке (Только в случае выпуска впервые ай ди кады или перевыпуска) ..."  th:field = "*{bankno}">
+            <input type="hidden" id = "bank2" placeholder="Номер счета в банке (Только в случае выпуска впервые ай ди кады или перевыпуска) ..."  th:field = "*{bankno}">
         </div>
         <button th:class="button" type="button"  onclick="submitForm('form2')">Заполнить заявку</button>
     </form>

@@ -237,20 +237,39 @@ function toggleInputs2() {
 }
 
 function updateFields(formId){
-    if(formId === 'form1')
-    var visa = document.getElementById('visa').value;
-    if(visa === "впервые" || visa === "перевыпуск"){
-        document.getElementById('bank').type = "text";
-        document.getElementById('idNumber').type = "text";
-    }
-    else if(visa === "работа"){
-        document.getElementById('"nWorkPlace"').type = "text";
-        document.getElementById('nWorkId').type = "text";
-        document.getElementById('nWorkNum').type = "text";
-    }
-    else if (visa === "адрес"){
 
+    if(formId === 'form1'){
+        var visa = document.getElementById('visa').value;
+        document.getElementById("inputContainerWork").style.display = "none";
+        document.getElementById("toggleSwitchWork").checked = false;
+        if(visa === "впервые" ){
+            document.getElementById('bank').type = "text";
+            document.getElementById('idNumber').type = "hidden";
+        } else if(visa === "перевыпуск"){
+            document.getElementById('bank').type = "text";
+            document.getElementById('idNumber').type = "text";
+        }
+        else{
+            document.getElementById('bank').type = "hidden";
+            document.getElementById('idNumber').type = "text";
+        }
     }
+    else if(formId === 'form2'){
+        var visa = document.getElementById('visa2').value;
+        if(visa === "впервые"){
+            document.getElementById('bank2').type = "text";
+            document.getElementById('idNumber2').type = "hidden";
+        } else if(visa === "перевыпуск"){
+            document.getElementById('bank2').type = "text";
+            document.getElementById('idNumber2').type = "text";
+        }
+        else{
+            document.getElementById('bank2').type = "hidden";
+            document.getElementById('idNumber2').type = "text";
+        }
+    }
+
+
 }
 
 function toggleInputsWork() {
@@ -261,6 +280,16 @@ function toggleInputsWork() {
     if (toggleSwitchWork.checked) {
         toggleSwitchWork.value = "true";
         inputContainerWork.style.display = "block";
+        if(document.getElementById('visa').value === "работа"){
+            document.getElementById('nWorkPlace').type = "text";
+            document.getElementById('nWorkId').type = "text";
+            document.getElementById('nWorkNum').type = "text";
+        }
+        else{
+            document.getElementById('nWorkPlace').type = "hidden";
+            document.getElementById('nWorkId').type = "hidden";
+            document.getElementById('nWorkNum').type = "hidden";
+        }
     } else {
         toggleSwitchWork.value = "false";
         inputContainerWork.style.display = "none";
