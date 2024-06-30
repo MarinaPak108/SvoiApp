@@ -81,7 +81,7 @@ function submitForm(formId) {
         isDataNotNull(passdate2, passdate2err, "Дата выдачи паспорта")
         isDataNotNull(passexp2,passexp2err, "Срок годности паспорта")
         isNotNull(koraddress2,koraddress2err, "Адрес проживания в Корее.")
-        isDigitsCharsLong(telno2, telno2err, "11", visa2, false)|| isMobile(telno2, telno2err)
+        isDigitsCharsLong(telno2, telno2err, "11")|| isMobile(telno2, telno2err)
         isNotNull(homeaddress2, homeaddress2err, "Адрес проживания на родине.")
 
         //if all is filled submit
@@ -95,7 +95,7 @@ function submitForm(formId) {
             !isNaN(Date.parse(passdate2))&&
             !isNaN(Date.parse(passexp2))&&
             koraddress2!==""&&
-            isDigitsCharsLong(telno2, telno2err, "11", visa2, false)&&
+            isDigitsCharsLong(telno2, telno2err, "11")&&
             isMobile(telno2, telno2err)&&
             homeaddress2!==""
         ){
@@ -179,7 +179,7 @@ function submitForm(formId) {
         isDataNotNull(passdate, passdateerr, "Дата выдачи паспорта")
         isDataNotNull(passexp,passexperr, "Срок годности паспорта")
         isNotNull(koraddress,koraddresserr, "Адрес проживания в Корее.")
-        isDigitsCharsLong(telno, telnoerr, "11", visa, false)|| isMobile(telno, telnoerr)
+        isDigitsCharsLong(telno, telnoerr, "11")|| isMobile(telno, telnoerr)
         isNotNull(homeaddress, homeaddresserr, "Адрес проживания на родине.")
 
         //if all is filled submit
@@ -193,7 +193,7 @@ function submitForm(formId) {
             !isNaN(Date.parse(passdate))&&
             !isNaN(Date.parse(passexp))&&
             koraddress!==""&&
-            isDigitsCharsLong(telno, telnoerr, "11", visa, false)&&
+            isDigitsCharsLong(telno, telnoerr, "11")&&
             isMobile(telno, telnoerr)&&
             homeaddress!==""
         ){
@@ -323,7 +323,7 @@ function isDataNotNull(value, errorElement, varName){
     return true;
 }
 
-function isDigitsCharsLong(value, errorElement, number, visa, isIdCheck) {
+function isDigitsCharsLong(value, errorElement, number, visa = "smth", isIdCheck=false) {
     var num = parseInt(number);
     if(isIdCheck && visa === "впервые") return true;
     else if (value.length !== num || !/^\d+$/.test(value)) {
