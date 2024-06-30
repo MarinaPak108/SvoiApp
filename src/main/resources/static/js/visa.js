@@ -339,7 +339,7 @@ function isDigitsCharsLong(value, errorElement, number, visa = "smth", isIdCheck
 }
 function isFirstApplicationIdValue(visa, id){
     if(visa === "впервые"){
-        return " ";
+        return "*************";
     }
     else return id;
 }
