@@ -76,7 +76,7 @@ function submitForm(formId) {
         if(isDropDownNotNull(sex2,sex2err)){}
         isNotNull(nationality2, nationality2err, "Гражданство")
         // should be digits and exactly 13
-        if(visa2 !=="впервые"){
+        if(visa2 !="впервые"){
             isDigitsCharsLong(idNumber2, idNumber2err, "13")
         }
         isNotNull(passno2, passno2err, "Номер паспорта")
@@ -176,7 +176,7 @@ function submitForm(formId) {
         isDropDownNotNull(sex,sexerr)
         isNotNull(nationality, nationalityerr, "Гражданство")
         // should be digits and exactly 13
-        if(visa!=="впервые"){isDigitsCharsLong(idNumber, idNumbererr, "13")}
+        if(visa!="впервые"){isDigitsCharsLong(idNumber, idNumbererr, "13")}
         isNotNull(passno, passnoerr, "Номер паспорта")
         isDataNotNull(passdate, passdateerr, "Дата выдачи паспорта")
         isDataNotNull(passexp,passexperr, "Срок годности паспорта")
