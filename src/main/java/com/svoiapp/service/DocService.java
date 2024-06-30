@@ -117,7 +117,7 @@ public class DocService {
         String docFilePath = values.get(1);
         try (InputStream inputStream = new FileInputStream(filePath)) {
             XWPFDocument doc = new XWPFDocument(inputStream);
-            doc = replaceText(doc, data);
+            doc = replaceTextDoc(doc, data);
             long timestampInMillis = System.currentTimeMillis();
             Boolean result = saveFile(docFilePath+login+"/", doc, login+"_"+timestampInMillis);
             doc.close();
@@ -125,7 +125,7 @@ public class DocService {
         }
     }
 
-    private XWPFDocument replaceText(XWPFDocument doc, HashMap<String, String> data) {
+    private XWPFDocument replaceTextDoc(XWPFDocument doc, HashMap<String, String> data) {
         List<XWPFTable> tables = doc.getTables();
         System.out.println(tables);
         XWPFTable table = tables.get(0);

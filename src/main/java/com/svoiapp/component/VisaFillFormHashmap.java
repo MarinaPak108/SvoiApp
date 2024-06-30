@@ -71,6 +71,7 @@ public class VisaFillFormHashmap {
         hashMap.put("@bmon", String.valueOf(birthday.getMonthValue()));
         hashMap.put("@bday", String.valueOf(birthday.getDayOfMonth()));
         hashMap.put("@nationality", data.getNationality());
+        if(data.getIdNumber().equals("")) data.setIdNumber("*************");
         hashMap.put("@9", "" + data.getIdNumber().charAt(0));
         hashMap.put("@10", "" + data.getIdNumber().charAt(1));
         hashMap.put("@11", "" + data.getIdNumber().charAt(2));
@@ -90,7 +91,6 @@ public class VisaFillFormHashmap {
         hashMap.put("@koraddress", data.getKoraddress());
         hashMap.put("@mobileno", data.getMobileno());
         hashMap.put("@homeaddress", data.getHomeaddress());
-        hashMap.put("@bankno", data.getBankno());
         hashMap.put("@data", formattedDateTime);
         return hashMap;
     }

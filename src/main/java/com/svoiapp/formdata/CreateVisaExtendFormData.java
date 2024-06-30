@@ -28,7 +28,6 @@ public class CreateVisaExtendFormData {
     private String compnoNew;
     private String comptelNew;
     private String salary;
-    private String bankno;
 
     public CreateVisaExtendFormData() {
     }
@@ -57,8 +56,7 @@ public class CreateVisaExtendFormData {
                                     String compnameNew,
                                     String compnoNew,
                                     String comptelNew,
-                                    String salary,
-                                    String bankno) {
+                                    String salary) {
         this.reason = reason;
         this.surname = surname;
         this.name = name;
@@ -84,7 +82,6 @@ public class CreateVisaExtendFormData {
         this.compnoNew = compnoNew;
         this.comptelNew = comptelNew;
         this.salary = salary;
-        this.bankno = bankno;
     }
 
     public String getReason() {
@@ -287,14 +284,6 @@ public class CreateVisaExtendFormData {
         this.salary = salary;
     }
 
-    public String getBankno() {
-        return bankno;
-    }
-
-    public void setBankno(String bankno) {
-        this.bankno = bankno;
-    }
-
     public CreateVisaExtendFormData convertNullFieldsToString (CreateVisaExtendFormData data){
         // Get the class of the provided entity
         Class<?> clazz = data.getClass();
@@ -312,7 +301,7 @@ public class CreateVisaExtendFormData {
                     // Ensure field is accessible (even if it's private)
                     field.setAccessible(true);
                     // Set the field to an empty string
-                    field.set(data, "");
+                    field.set(data, " ");
                     field.setAccessible(false);
                 }
             } catch (IllegalAccessException e) {

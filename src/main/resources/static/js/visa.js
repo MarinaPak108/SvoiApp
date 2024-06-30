@@ -23,7 +23,7 @@ function submitForm(formId) {
         var sex2 = document.getElementById('sex2').value.trim();
         var nationality2 = document.getElementById('nationality2').value.trim();
         // -> check numbers
-        var idNumber2 = document.getElementById('idNumber2').value.trim();
+        var idNumber2 = isFirstApplicationIdValue(visa2, document.getElementById('idNumber2').value.trim());
         var passno2 = document.getElementById('passno2').value.trim();
         // -> date
         var passdate2 = document.getElementById('passdate2').value.trim();
@@ -84,9 +84,6 @@ function submitForm(formId) {
         isDigitsCharsLong(telno2, telno2err, "11")|| isMobile(telno2, telno2err)
         isNotNull(homeaddress2, homeaddress2err, "Адрес проживания на родине.")
 
-        //make id val not null:
-        idNumber2 = isFirstApplicationIdValue(visa2, idNumber2);
-
         //if all is filled submit
         if(visa2!=="0"&&
             surname2 !==""&&
@@ -122,7 +119,7 @@ function submitForm(formId) {
         var sex = document.getElementById('sex').value.trim();
         var nationality = document.getElementById('nationality').value.trim();
         // -> check numbers
-        var idNumber = document.getElementById('idNumber').value.trim();
+        var idNumber = isFirstApplicationIdValue(visa, document.getElementById('idNumber').value.trim());
         var passno = document.getElementById('passno').value.trim();
         // -> date
         var passdate = document.getElementById('passdate').value.trim();
@@ -183,9 +180,6 @@ function submitForm(formId) {
         isNotNull(koraddress,koraddresserr, "Адрес проживания в Корее.")
         isDigitsCharsLong(telno, telnoerr, "11")|| isMobile(telno, telnoerr)
         isNotNull(homeaddress, homeaddresserr, "Адрес проживания на родине.")
-
-        //make id val not null:
-        idNumber = isFirstApplicationIdValue(visa, idNumber);
 
         //if all is filled submit
         if(visa!=="0"&&
