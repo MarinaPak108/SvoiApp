@@ -76,12 +76,12 @@ function submitForm(formId) {
         if(isDropDownNotNull(sex2,sex2err)){}
         isNotNull(nationality2, nationality2err, "Гражданство")
         // should be digits and exactly 13
-        isDigitsCharsLong(idNumber2, idNumber2err, "13", visa2)
+        isDigitsCharsLong(idNumber2, idNumber2err, "13", visa2, true)
         isNotNull(passno2, passno2err, "Номер паспорта")
         isDataNotNull(passdate2, passdate2err, "Дата выдачи паспорта")
         isDataNotNull(passexp2,passexp2err, "Срок годности паспорта")
         isNotNull(koraddress2,koraddress2err, "Адрес проживания в Корее.")
-        isDigitsCharsLong(telno2, telno2err, "11")|| isMobile(telno2, telno2err)
+        isDigitsCharsLong(telno2, telno2err, "11", visa2, false)|| isMobile(telno2, telno2err)
         isNotNull(homeaddress2, homeaddress2err, "Адрес проживания на родине.")
 
         //if all is filled submit
@@ -91,11 +91,11 @@ function submitForm(formId) {
             !isNaN(Date.parse(calendar2))&&
             sex2!=="0"&&
             nationality2 !==""&&
-            isDigitsCharsLong(idNumber2, idNumber2err,"13")&&
+            isDigitsCharsLong(idNumber2, idNumber2err,"13", visa2, true)&&
             !isNaN(Date.parse(passdate2))&&
             !isNaN(Date.parse(passexp2))&&
             koraddress2!==""&&
-            isDigitsCharsLong(telno2, telno2err, "11")&&
+            isDigitsCharsLong(telno2, telno2err, "11", visa2, false)&&
             isMobile(telno2, telno2err)&&
             homeaddress2!==""
         ){
@@ -174,12 +174,12 @@ function submitForm(formId) {
         isDropDownNotNull(sex,sexerr)
         isNotNull(nationality, nationalityerr, "Гражданство")
         // should be digits and exactly 13
-        isDigitsCharsLong(idNumber, idNumbererr, "13", visa)
+        isDigitsCharsLong(idNumber, idNumbererr, "13", visa, true)
         isNotNull(passno, passnoerr, "Номер паспорта")
         isDataNotNull(passdate, passdateerr, "Дата выдачи паспорта")
         isDataNotNull(passexp,passexperr, "Срок годности паспорта")
         isNotNull(koraddress,koraddresserr, "Адрес проживания в Корее.")
-        isDigitsCharsLong(telno, telnoerr, "11")|| isMobile(telno, telnoerr)
+        isDigitsCharsLong(telno, telnoerr, "11", visa, false)|| isMobile(telno, telnoerr)
         isNotNull(homeaddress, homeaddresserr, "Адрес проживания на родине.")
 
         //if all is filled submit
@@ -189,11 +189,11 @@ function submitForm(formId) {
             !isNaN(Date.parse(calendar))&&
             sex!=="0"&&
             nationality !==""&&
-            isDigitsCharsLong(idNumber, idNumbererr,"13")&&
+            isDigitsCharsLong(idNumber, idNumbererr,"13", visa, true)&&
             !isNaN(Date.parse(passdate))&&
             !isNaN(Date.parse(passexp))&&
             koraddress!==""&&
-            isDigitsCharsLong(telno, telnoerr, "11")&&
+            isDigitsCharsLong(telno, telnoerr, "11", visa, false)&&
             isMobile(telno, telnoerr)&&
             homeaddress!==""
         ){
@@ -323,9 +323,9 @@ function isDataNotNull(value, errorElement, varName){
     return true;
 }
 
-function isDigitsCharsLong(value, errorElement, number, visa) {
+function isDigitsCharsLong(value, errorElement, number, visa, isIdCheck) {
     var num = parseInt(number);
-    if(visa === "впервые") return true;
+    if(isIdCheck && visa === "впервые") return true;
     else if (value.length !== num || !/^\d+$/.test(value)) {
         errorElement.textContent = 'Введите '+ number+'ти значное число.';
         return false;
