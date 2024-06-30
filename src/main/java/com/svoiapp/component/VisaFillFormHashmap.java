@@ -71,20 +71,21 @@ public class VisaFillFormHashmap {
         hashMap.put("@bmon", String.valueOf(birthday.getMonthValue()));
         hashMap.put("@bday", String.valueOf(birthday.getDayOfMonth()));
         hashMap.put("@nationality", data.getNationality());
-        if(data.getIdNumber().equals("")) data.setIdNumber("*************");
-        hashMap.put("@9", "" + data.getIdNumber().charAt(0));
-        hashMap.put("@10", "" + data.getIdNumber().charAt(1));
-        hashMap.put("@11", "" + data.getIdNumber().charAt(2));
-        hashMap.put("@12", "" + data.getIdNumber().charAt(3));
-        hashMap.put("@13", "" + data.getIdNumber().charAt(4));
-        hashMap.put("@14", "" + data.getIdNumber().charAt(5));
-        hashMap.put("@15", "" + data.getIdNumber().charAt(6));
-        hashMap.put("@16", "" + data.getIdNumber().charAt(7));
-        hashMap.put("@17", "" + data.getIdNumber().charAt(8));
-        hashMap.put("@18", "" + data.getIdNumber().charAt(9));
-        hashMap.put("@19", "" + data.getIdNumber().charAt(10));
-        hashMap.put("@20", "" + data.getIdNumber().charAt(11));
-        hashMap.put("@21", "" + data.getIdNumber().charAt(12));
+        if(!data.getIdNumber().equals("")&& data.getIdNumber().length()==13){
+            hashMap.put("@9", "" + data.getIdNumber().charAt(0));
+            hashMap.put("@10", "" + data.getIdNumber().charAt(1));
+            hashMap.put("@11", "" + data.getIdNumber().charAt(2));
+            hashMap.put("@12", "" + data.getIdNumber().charAt(3));
+            hashMap.put("@13", "" + data.getIdNumber().charAt(4));
+            hashMap.put("@14", "" + data.getIdNumber().charAt(5));
+            hashMap.put("@15", "" + data.getIdNumber().charAt(6));
+            hashMap.put("@16", "" + data.getIdNumber().charAt(7));
+            hashMap.put("@17", "" + data.getIdNumber().charAt(8));
+            hashMap.put("@18", "" + data.getIdNumber().charAt(9));
+            hashMap.put("@19", "" + data.getIdNumber().charAt(10));
+            hashMap.put("@20", "" + data.getIdNumber().charAt(11));
+            hashMap.put("@21", "" + data.getIdNumber().charAt(12));
+        }
         hashMap.put("@passno", data.getPassno());
         hashMap.put("@passdate", data.getPassdate());
         hashMap.put("@passexp", data.getPassexp());
