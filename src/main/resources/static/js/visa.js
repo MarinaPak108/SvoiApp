@@ -84,6 +84,9 @@ function submitForm(formId) {
         isDigitsCharsLong(telno2, telno2err, "11")|| isMobile(telno2, telno2err)
         isNotNull(homeaddress2, homeaddress2err, "Адрес проживания на родине.")
 
+        //make id val not null:
+        idNumber2 = isFirstApplicationIdValue(visa2, idNumber2);
+
         //if all is filled submit
         if(visa2!=="0"&&
             surname2 !==""&&
@@ -99,7 +102,6 @@ function submitForm(formId) {
             isMobile(telno2, telno2err)&&
             homeaddress2!==""
         ){
-            //document.getElementById('visatype2').value = /*[[${'f4'}]]*/ '';
             document.getElementById(formId).submit();
 
         }
@@ -181,6 +183,9 @@ function submitForm(formId) {
         isNotNull(koraddress,koraddresserr, "Адрес проживания в Корее.")
         isDigitsCharsLong(telno, telnoerr, "11")|| isMobile(telno, telnoerr)
         isNotNull(homeaddress, homeaddresserr, "Адрес проживания на родине.")
+
+        //make id val not null:
+        idNumber = isFirstApplicationIdValue(visa, idNumber);
 
         //if all is filled submit
         if(visa!=="0"&&
@@ -331,6 +336,12 @@ function isDigitsCharsLong(value, errorElement, number, visa = "smth", isIdCheck
         return false;
     }
     return true;
+}
+function isFirstApplicationIdValue(visa, id){
+    if(visa === "впервые"){
+        return " ";
+    }
+    else return id;
 }
 
 function isMobile(value, errorElement){
