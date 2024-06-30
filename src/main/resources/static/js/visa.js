@@ -76,9 +76,7 @@ function submitForm(formId) {
         if(isDropDownNotNull(sex2,sex2err)){}
         isNotNull(nationality2, nationality2err, "Гражданство")
         // should be digits and exactly 13
-        if(visa2 !="впервые"){
-            isDigitsCharsLong(idNumber2, idNumber2err, "13")
-        }
+        isDigitsCharsLong(idNumber2, idNumber2err, "13", visa2)
         isNotNull(passno2, passno2err, "Номер паспорта")
         isDataNotNull(passdate2, passdate2err, "Дата выдачи паспорта")
         isDataNotNull(passexp2,passexp2err, "Срок годности паспорта")
@@ -176,7 +174,7 @@ function submitForm(formId) {
         isDropDownNotNull(sex,sexerr)
         isNotNull(nationality, nationalityerr, "Гражданство")
         // should be digits and exactly 13
-        if(visa!="впервые"){isDigitsCharsLong(idNumber, idNumbererr, "13")}
+        isDigitsCharsLong(idNumber, idNumbererr, "13", visa)
         isNotNull(passno, passnoerr, "Номер паспорта")
         isDataNotNull(passdate, passdateerr, "Дата выдачи паспорта")
         isDataNotNull(passexp,passexperr, "Срок годности паспорта")
@@ -325,9 +323,10 @@ function isDataNotNull(value, errorElement, varName){
     return true;
 }
 
-function isDigitsCharsLong(value, errorElement, number) {
+function isDigitsCharsLong(value, errorElement, number, visa) {
     var num = parseInt(number);
-    if (value.length !== num || !/^\d+$/.test(value)) {
+    if(visa === "впервые") return true;
+    else if (value.length !== num || !/^\d+$/.test(value)) {
         errorElement.textContent = 'Введите '+ number+'ти значное число.';
         return false;
     }
